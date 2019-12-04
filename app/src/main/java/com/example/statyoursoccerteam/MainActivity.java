@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         chronometer = (Chronometer) findViewById(R.id.chronometer);
+        chronometer.setFormat("Time\n%s");
+        chronometer.setBase(SystemClock.elapsedRealtime());
         findViews();
         implementEvents();
     }
