@@ -269,11 +269,6 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
                     }
                 }
 
-
-
-
-
-
                 //If u had not provided any color in ACTION_DRAG_STARTED then clear color filter.
                 view.getBackground().clearColorFilter();
                 // Invalidate the view to force a redraw in the new tint
