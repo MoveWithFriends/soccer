@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+
+
+    <Chronometer
+            android:id="@+id/counter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            />
+
+
+    <!--    play icon -->
+    <item
+        android:id="@+id/play_action"
+        android:icon="@drawable/ic_play_arrow_black_24dp"
+        android:title="Play"
+        app:showAsAction="always"
+        />
+
+    <!--    pause icon -->
+    <item
+        android:id="@+id/pause_action"
+        android:icon="@drawable/ic_pause_black_24dp"
+        android:title=""
+        app:showAsAction="always"
+        />
+
+    <!--    stop icon -->
+    <item
+        android:id="@+id/stop_action"
+        android:icon="@drawable/ic_stop_black_24dp"
+        android:title=""
+        app:showAsAction="always"
+        />
+
+
+</menu>

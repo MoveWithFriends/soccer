@@ -7,15 +7,14 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
-import android.view.Choreographer;
 import android.view.DragEvent;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,18 +26,29 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
     private ImageView nick;
     private ImageView joost;
     private ImageView stijn;
-    private static final String IMAGE_VIEW_TAG = "LAUNCHER LOGO";
+    private LinearLayout goals;
+    private LinearLayout assists;
+    private LinearLayout substitute1;
+    private LinearLayout substitute2;
+    private LinearLayout substitute3;
+    private LinearLayout substitute4;
+    private LinearLayout substitute5;
+    private static final String JOOST_VIEW_TAG = "Joost";
+    private static final String NICK_VIEW_TAG = "Nick";
+    private static final String STIJN_VIEW_TAG = "Stijn";
+    private static final String JURGEN_VIEW_TAG = "Jurgen";
+    private static final String GOALS_LAYOUT_TAG = "Goals";
+    private static final String ASSISTS_LAYOUT_TAG = "Assists";
+    private static final String SUBSTITUTE_LAYOUT_TAG = "Wissel";
 
     private Chronometer chronometer;
     private boolean running;
     private long pauseOffset;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         chronometer = (Chronometer) findViewById(R.id.chronometer);
@@ -46,6 +56,22 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
         chronometer.setBase(SystemClock.elapsedRealtime());
         findViews();
         implementEvents();
+
+
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.hide();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main, menu);
+
+//        chronometer2 = (Chronometer) findViewById(R.id.counter);
+//        chronometer2.setFormat("Time\n%s");
+//        chronometer2.setBase(SystemClock.elapsedRealtime());
+        return super.onCreateOptionsMenu(menu);
+
     }
 
     public void startChronometer(View v){
@@ -71,13 +97,13 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
     //Find all views and set Tag to all draggable views
     private void findViews() {
         jurgen = (ImageView) findViewById(R.id.jurgen_view);
-        jurgen.setTag(IMAGE_VIEW_TAG);
+        jurgen.setTag(JURGEN_VIEW_TAG);
         joost = (ImageView) findViewById(R.id.joost_view);
-        joost.setTag(IMAGE_VIEW_TAG);
+        joost.setTag(JOOST_VIEW_TAG);
         nick = (ImageView) findViewById(R.id.nick_view);
-        nick.setTag(IMAGE_VIEW_TAG);
+        nick.setTag(NICK_VIEW_TAG);
         stijn = (ImageView) findViewById(R.id.stijn_view);
-        stijn.setTag(IMAGE_VIEW_TAG);
+        stijn.setTag(STIJN_VIEW_TAG);
 
     }
 
@@ -89,6 +115,19 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
         joost.setOnLongClickListener(this);
         nick.setOnLongClickListener(this);
         stijn.setOnLongClickListener(this);
+
+        goals = (LinearLayout) findViewById(R.id.goal_a);
+        goals.setTag(GOALS_LAYOUT_TAG);
+
+        assists = (LinearLayout) findViewById(R.id.assist_a);
+        assists.setTag(ASSISTS_LAYOUT_TAG);
+
+        substitute1 = (LinearLayout) findViewById(R.id.substitute_1);
+        substitute2 = (LinearLayout) findViewById(R.id.substitute_2);
+        substitute3 = (LinearLayout) findViewById(R.id.substitute_3);
+        substitute4 = (LinearLayout) findViewById(R.id.substitute_4);
+        substitute5 = (LinearLayout) findViewById(R.id.substitute_5);
+
 
         //add or remove any layout view that you don't want to accept dragged view
         findViewById(R.id.a_1_layout).setOnDragListener(this);
@@ -111,11 +150,13 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
         findViewById(R.id.d_3_layout).setOnDragListener(this);
         findViewById(R.id.d_4__layout).setOnDragListener(this);
         findViewById(R.id.d_5_layout).setOnDragListener(this);
-        findViewById(R.id.substitute_1).setOnDragListener(this);
-        findViewById(R.id.substitute_2).setOnDragListener(this);
-        findViewById(R.id.substitute_3).setOnDragListener(this);
-        findViewById(R.id.substitute_4).setOnDragListener(this);
-        findViewById(R.id.substitute_5).setOnDragListener(this);
+        substitute1.setOnDragListener(this);
+        substitute2.setOnDragListener(this);
+        substitute3.setOnDragListener(this);
+        substitute4.setOnDragListener(this);
+        substitute5.setOnDragListener(this);
+        assists.setOnDragListener(this);
+        goals.setOnDragListener(this);
     }
 
     @Override
@@ -145,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
         );
 
         //Set view visibility to INVISIBLE as we are going to drag the view
-        view.setVisibility(View.INVISIBLE);
+        view.setVisibility(View.VISIBLE);
         return true;
     }
 
@@ -164,10 +205,10 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
                     // to give any color tint to the View to indicate that it can accept
                     // data.
 
-                    //  view.getBackground().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);//set background color to your view
+//                      view.getBackground().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);//set background color to your view
 
                     // Invalidate the view to force a redraw in the new tint
-                    //  view.invalidate();
+//                      view.invalidate();
 
                     // returns true to indicate that the View can accept the dragged data.
                     return true;
@@ -178,72 +219,77 @@ public class MainActivity extends AppCompatActivity implements View.OnDragListen
                 // not receive events again until ACTION_DRAG_ENDED is sent.
                 return false;
 
-//            case DragEvent.ACTION_DRAG_ENTERED:
-//                // Applies a YELLOW or any color tint to the View, when the dragged view entered into drag acceptable view
-//                // Return true; the return value is ignored.
-//
-//                view.getBackground().setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_IN);
-//
-//                // Invalidate the view to force a redraw in the new tint
-//                view.invalidate();
-//
-//                return true;
+            case DragEvent.ACTION_DRAG_ENTERED:
+                // Applies a YELLOW or any color tint to the View, when the dragged view entered into drag acceptable view
+                // Return true; the return value is ignored.
+
+                view.getBackground().setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_IN);
+
+                //TODO check whether entered field is assist or goal field. If so. add assist or goal to dragged player
+
+                // Invalidate the view to force a redraw in the new tint
+                view.invalidate();
+
+                return true;
             case DragEvent.ACTION_DRAG_LOCATION:
                 // Ignore the event
                 return true;
-//            case DragEvent.ACTION_DRAG_EXITED:
-//                // Re-sets the color tint to blue, if you had set the BLUE color or any color in ACTION_DRAG_STARTED. Returns true; the return value is ignored.
-//
-//                //  view.getBackground().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
-//
-//                //If u had not provided any color in ACTION_DRAG_STARTED then clear color filter.
-//                view.getBackground().clearColorFilter();
-//                // Invalidate the view to force a redraw in the new tint
-//                view.invalidate();
-//
-//                return true;
+            case DragEvent.ACTION_DRAG_EXITED:
+                //If u had not provided any color in ACTION_DRAG_STARTED then clear color filter.
+                view.getBackground().clearColorFilter();
+                // Invalidate the view to force a redraw in the new tint
+                view.invalidate();
+
+                return true;
             case DragEvent.ACTION_DROP:
+                //TODO IF statement to add goals and assists (return to original position (only IF field players)
+                //TODO exchange with players (On pitch AND with substitutes)
+
+
                 // Gets the item containing the dragged data
                 ClipData.Item item = event.getClipData().getItemAt(0);
 
                 // Gets the text data from the item.
                 String dragData = item.getText().toString();
 
-                // Displays a message containing the dragged data.
-                Toast.makeText(this, "Dragged data is " + dragData, Toast.LENGTH_SHORT).show();
+                View vr = (View) event.getLocalState();
+                LinearLayout container = (LinearLayout) view;
 
-                // Turns off any color tints
-//                view.getBackground().clearColorFilter();
+                if(container.getTag() == null) {
+                    ViewGroup owner = (ViewGroup) vr.getParent();
+                    owner.removeView(vr);//remove the dragged view
+                    container.addView(vr);//Add the dragged view
+                    vr.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
 
-                // Invalidates the view to force a redraw
+                } else {
+                    if (container.getTag().toString().equals("Goals")) {
+                        Toast.makeText(this, "" + dragData + " made a goal", Toast.LENGTH_SHORT).show();
+                    } else if (container.getTag().toString().equals("Assists")) {
+                        Toast.makeText(this, "" + dragData + " made an assist", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
+
+
+
+
+                //If u had not provided any color in ACTION_DRAG_STARTED then clear color filter.
+                view.getBackground().clearColorFilter();
+                // Invalidate the view to force a redraw in the new tint
                 view.invalidate();
-
-                View v = (View) event.getLocalState();
-                ViewGroup owner = (ViewGroup) v.getParent();
-                owner.removeView(v);//remove the dragged view
-                LinearLayout container = (LinearLayout) view;//caste the view into LinearLayout as our drag acceptable layout is LinearLayout
-                container.addView(v);//Add the dragged view
-                v.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
 
                 // Returns true. DragEvent.getResult() will return true.
                 return true;
+
             case DragEvent.ACTION_DRAG_ENDED:
                 // Turns off any color tinting
-//                view.getBackground().clearColorFilter();
+                view.getBackground().clearColorFilter();
 
                 // Invalidates the view to force a redraw
                 view.invalidate();
 
-                // Does a getResult(), and displays what happened.
-                if (event.getResult())
-                    Toast.makeText(this, "The drop was handled.", Toast.LENGTH_SHORT).show();
 
-                else
-                    Toast.makeText(this, "The drop didn't work.", Toast.LENGTH_SHORT).show();
-
-
-                // returns true; the value is ignored.
-                return true;
 
             // An unknown action type was received.
             default:
