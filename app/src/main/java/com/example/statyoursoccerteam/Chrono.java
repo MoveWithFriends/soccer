@@ -13,7 +13,7 @@ public class Chrono {
     public void startChronometer(View v){
         if(!running){
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-            chronometer.start();;
+            chronometer.start();
             running  = true;
         }
     }
