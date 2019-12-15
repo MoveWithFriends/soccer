@@ -9,6 +9,13 @@
     android:padding="16dp"
     >
 
+  <androidx.appcompat.widget.Toolbar
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      android:id="@+id/toolbar"
+      tools:ignore="MissingConstraints"
+      />
+
   <ImageView
       android:id="@+id/list_item_image"
       android:layout_width="50dp"
@@ -30,6 +37,7 @@
       app:layout_constraintHorizontal_bias="0.045"
       app:layout_constraintStart_toEndOf="@+id/list_item_image"
       tools:layout_editor_absoluteY="-1dp"
+      tools:ignore="MissingConstraints"
       />
 
   <TextView

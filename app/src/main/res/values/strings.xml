@@ -3,4 +3,7 @@
     <string name="draggable_text">Draggable Text</string>
     <string name="draggable_button">Draggable Button</string>
     <string name="pitch">Soccer Pitch</string>
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
 </resources>

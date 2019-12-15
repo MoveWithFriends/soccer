@@ -356,9 +356,10 @@ tools:context=".StartActivity">
 
         <TextView
             android:id="@+id/score_in_advance"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Doelpunt voor"
+            android:text="0"
+            android:textSize="32sp"
             />
     </LinearLayout>
     <LinearLayout
@@ -418,21 +419,26 @@ tools:context=".StartActivity">
         >
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/score_oponent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:clickable="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="@drawable/customborder"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground"
         >
 
         <TextView
             android:id="@+id/score_against"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Doelpunten tegen"
+            android:gravity="center|center_horizontal"
+            android:text="0"
+            android:textSize="32sp"
             />
     </LinearLayout>
 
@@ -460,11 +466,12 @@ tools:context=".StartActivity">
         >
 
         <Chronometer
-            android:id="@+id/chronometer"
+            android:id="@+id/chronometer_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
             />
+
     </LinearLayout>
     <LinearLayout
         android:id="@+id/substitute_1"

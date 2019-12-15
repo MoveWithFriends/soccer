@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.start_game:
                 // User chose the "Settings" item, show the app settings UI...
-                Toast.makeText(this, "You pressed start", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "You pressed game start", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, StartActivity.class);
                 startActivity(intent);
