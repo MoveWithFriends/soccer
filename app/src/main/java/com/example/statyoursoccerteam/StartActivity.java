@@ -12,26 +12,37 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.icu.text.Transliterator;
+import android.media.Image;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewAnimator;
+
+import java.util.concurrent.TimeUnit;
+
+import static com.example.statyoursoccerteam.R.id.action_live_chrono;
 
 
 public class StartActivity extends AppCompatActivity implements View.OnLongClickListener, View.OnDragListener {
 
     Scores scores_pro = new Scores();
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = "startactivity";
     private ImageView jurgen;
     private ImageView nick;
     private ImageView joost;
@@ -53,15 +64,17 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     private static final String SUBSTITUTE_LAYOUT_TAG = "Wissel";
     private static final String CHRONOMETER_TAG = "Chrono";
     private static final String GOALS_AGAINST_TAG = "Goals against";
+     private boolean running;
 
     private Chronometer chronometer2;
     private Chronometer chronometer;
-    private boolean running;
-    private long pauseOffset;
+     long pauseOffset;
+     long timer = 10000;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
@@ -90,39 +103,43 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.start, menu);
 
-        return super.onCreateOptionsMenu(menu);
-
+return true;
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Chrono chrono = new Chrono();
-
+//         Chrono chrono = new Chrono( this, 0);
 
         switch (item.getItemId()) {
             case R.id.play_action:
                 // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(this, "You pressed start", Toast.LENGTH_SHORT).show();
                 startChronometer();
+
                 return true;
 
             case R.id.pause_action:
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
-                Toast.makeText(this, "You pressed pause", Toast.LENGTH_SHORT).show();
                 pauseChronometer();
+
                 return true;
 
             case R.id.stop_action:
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
                 Toast.makeText(this, "You pressed stop", Toast.LENGTH_SHORT).show();
+
                     stopChronometer();
+
                 return true;
 
             default:
@@ -131,6 +148,9 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    //TODO Chrono methoden moeten eigenlijk niet in deze activity staan. Er moeten eigenlijk methoden in de class chrono worden afgedraaid en het resulataat hier zichtbaar maar dat is me ngo niet gelukt.
+   //Misschien moet het een ASyncTask worden??
 
     public void startChronometer(){
         if(!running){
@@ -142,18 +162,22 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
 
     public void pauseChronometer(){
+
         if(running){
+            showElapsedTime();
 
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             running = false;
 
+        } else {
+           startChronometer();
         }
     }
 
     public void stopChronometer(){
-        if(running){
 
+        if(running) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.app_name);
             builder.setMessage("Do you want to stop ?");
@@ -173,9 +197,14 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
             });
             AlertDialog alert = builder.create();
             alert.show();
-
-
         }
+    }
+
+    public void showElapsedTime() {
+        long elapsedMillis = SystemClock.elapsedRealtime()
+                - chronometer.getBase();
+        Toast.makeText(this,
+                "Elapsed milliseconds: " + elapsedMillis, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -216,14 +245,6 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         substitute5 = (LinearLayout) findViewById(R.id.substitute_5);
         goals_against = (LinearLayout) findViewById(R.id.score_oponent);
         goals_against.setTag(GOALS_AGAINST_TAG);
-
-//        View.OnClickListener onClickListener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if()
-//            }
-//        };
-//        goals_against.setOnClickListener(onClickListener);
 
         //add or remove any layout view that you don't want to accept dragged view
         findViewById(R.id.a_1_layout).setOnDragListener(this);
@@ -283,7 +304,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         );
 
         //Set view visibility to INVISIBLE as we are going to drag the view
-        view.setVisibility(View.VISIBLE);
+        view.setVisibility(View.INVISIBLE);
         return true;
     }
 
@@ -295,10 +316,13 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         // Defines a variable to store the action type for the incoming event
         int action = event.getAction();
         TextView score = (TextView) findViewById(R.id.score_in_advance);
+        View dragged = (View) event.getLocalState();
 
         // Handles each of the expected events
         switch (action) {
             case DragEvent.ACTION_DRAG_STARTED:
+
+
                 // Determines if this View can accept the dragged data
                 if (event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
 
@@ -327,7 +351,6 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
             case DragEvent.ACTION_DROP:
                 //TODO exchange with players (On pitch AND with substitutes)
 
-
                 // Gets the item containing the dragged data
                 ClipData.Item item = event.getClipData().getItemAt(0);
 
@@ -338,8 +361,24 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
                 LinearLayout container = (LinearLayout) view;
 
                 if(container.getTag() == null) {
-                    ViewGroup owner = (ViewGroup) vr.getParent();
-                    owner.removeView(vr);//remove the dragged view
+                    if(container.getChildAt(0) != null) {
+                        View target = container.getChildAt(0);
+
+                        LinearLayout oldOwner = (LinearLayout) dragged.getParent();
+                        Log.d(TAG, "onDrag: old owener "+oldOwner.toString());
+                        Log.d(TAG, "onDrag: putted on "+ target.toString());
+                        Log.d(TAG, "onDrag: dragged" + dragged.toString());
+                        Log.d(TAG, "onDrag: new location " + container.toString());
+
+                        oldOwner.removeView(dragged);
+                        container.removeView(target);
+                        container.addView(dragged);
+                        oldOwner.addView(target);
+                    }
+
+                    //remove the dragged view
+                    ViewGroup oldOwner = (ViewGroup) vr.getParent();
+                                            oldOwner.removeView(vr);
                     container.addView(vr);//Add the dragged view
                     vr.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
 
@@ -347,9 +386,11 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
                     if (container.getTag().toString().equals("Goals")) {
                         Toast.makeText(this, "" + dragData + " made a goal", Toast.LENGTH_SHORT).show();
                             score.setText(scores_pro.scorePro());
+
                     } else if (container.getTag().toString().equals("Assists")) {
                         Toast.makeText(this, "" + dragData + " made an assist", Toast.LENGTH_SHORT).show();
                     }
+                    vr.setVisibility(View.VISIBLE);
                 }
 
                 //If u had not provided any color in ACTION_DRAG_STARTED then clear color filter.
@@ -366,7 +407,6 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
                 // Invalidates the view to force a redraw
                 view.invalidate();
-
 
 
                 // An unknown action type was received.

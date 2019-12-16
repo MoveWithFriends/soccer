@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         MyViewAdapter adapter = new MyViewAdapter(getApplicationContext(), NUM_ITEMS, data);
 
         mPersonList.setAdapter(adapter);
+
+
     }
 
     @Override

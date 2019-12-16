@@ -1,5 +1,8 @@
 package com.example.statyoursoccerteam;
 
+import android.os.SystemClock;
+import android.widget.Toast;
+
 public class Scores {
     private int scoreAgainst = 0;
     private int scorePro = 0;
@@ -16,4 +19,6 @@ public class Scores {
         String goal = String.valueOf(scorePro);
         return goal;
     }
+
+
 }

@@ -2,26 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<!--<item android:id="@+id/action_live_chrono"-->
-<!--    android:title=""-->
-<!--    app:showAsAction="ifRoom"-->
-<!--    app:actionLayout="@layout/search"-->
-<!--    />-->
-
+<item android:id="@+id/action_live_chrono"
+    android:title=""
+    app:showAsAction="ifRoom"
+    app:actionLayout="@layout/search">
     <Chronometer
-        android:id="@+id/chronometer_view2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        />
+    android:id="@+id/chronometer_view2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="30sp"
+    />
+</item>
+
+
 
     <!--    play icon -->
     <item
         android:id="@+id/play_action"
         android:icon="@drawable/ic_play_arrow_black_24dp"
         android:title="@string/play"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always"/>
+<!--        android:onClick="startChronometer"-->
+
 
     <!--    pause icon -->
     <item

@@ -1,6 +1,7 @@
 package com.example.statyoursoccerteam;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.selection.SelectionTracker;
+import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.statyoursoccerteam.Data.Person;
@@ -21,6 +24,8 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
 
     private int  mNumberItems;;
     private ArrayList<Person> mPersons;
+
+
 
     class PersonViewHolder extends RecyclerView.ViewHolder {
 
