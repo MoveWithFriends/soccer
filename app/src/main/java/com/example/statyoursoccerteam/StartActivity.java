@@ -365,10 +365,10 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
                             LinearLayout oldOwner = (LinearLayout) dragged.getParent();
                             if (oldOwner != container) {
-                                Log.d(TAG, "onDrag: old owener " + oldOwner.toString());
-                                Log.d(TAG, "onDrag: putted on " + target.toString());
-                                Log.d(TAG, "onDrag: dragged" + dragged.toString());
-                                Log.d(TAG, "onDrag: new location " + container.toString());
+//                                Log.d(TAG, "onDrag: old owener " + oldOwner.toString());
+//                                Log.d(TAG, "onDrag: putted on " + target.toString());
+//                                Log.d(TAG, "onDrag: dragged" + dragged.toString());
+//                                Log.d(TAG, "onDrag: new location " + container.toString());
 
                                 oldOwner.removeView(dragged);
                                 container.removeView(target);
@@ -388,8 +388,8 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
                             score.setText(scores_pro.scorePro());
                         } else if (container.getTag().toString().equals("Assists")) {
                             Toast.makeText(this, "" + dragData + " made an assist", Toast.LENGTH_SHORT).show();
-                        } else if (container.getTag().toString().equals("Yellow")) {
-                            Toast.makeText(this, "" + dragData + " made an assist", Toast.LENGTH_SHORT).show();
+                        } else if (container.getTag().toString().isEmpty()) {
+                            Toast.makeText(this, "" + dragData + " kan niet", Toast.LENGTH_SHORT).show();
                         }
                     }
                     vr.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
