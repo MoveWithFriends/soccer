@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "812581333587",
+    "firebase_url": "https://soccerstats-2be70.firebaseio.com",
+    "project_id": "soccerstats-2be70",
+    "storage_bucket": "soccerstats-2be70.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812581333587:android:388a580aa7d4e5e35cf4a6",
+        "android_client_info": {
+          "package_name": "com.example.soccerstats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812581333587-1m4eokdqn4h3fu1uit1jckppfup76b23.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.soccerstats",
+            "certificate_hash": "642bf4370a5067e748c03e01245546b8a230906f"
+          }
+        },
+        {
+          "client_id": "812581333587-neir59hoehbof2i9cm5dmvqfte3gimaq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgRTUhXc1UR0_WFlBFQZhzgxf8Ijrq2o0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812581333587-neir59hoehbof2i9cm5dmvqfte3gimaq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
