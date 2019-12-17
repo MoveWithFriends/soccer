@@ -35,6 +35,7 @@ tools:context=".StartActivity">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="ASSIST"
+            android:gravity="center"
             android:textSize="36sp"
             />
     </LinearLayout>
@@ -141,6 +142,7 @@ tools:context=".StartActivity">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="GOAL"
+            android:gravity="center"
             android:textSize="36sp"
             />
     </LinearLayout>
@@ -158,14 +160,25 @@ tools:context=".StartActivity">
     >
 
     <LinearLayout
-        android:id="@+id/assist_b"
+        android:id="@+id/yellow_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="@drawable/customborder"
+        android:background="@color/yellow"
         >
+
+        <TextView
+            android:id="@+id/textView_yellow_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="YELLOW CARD"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:singleLine="false"
+            android:textSize="36sp"
+            />
 
     </LinearLayout>
 
@@ -234,8 +247,18 @@ tools:context=".StartActivity">
         android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="@drawable/customborder"
+        android:background="@color/red"
         >
+        <TextView
+            android:id="@+id/textView_red_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RED \nCARD"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:singleLine="false"
+            android:textSize="36sp"
+            />
 
     </LinearLayout>
 
