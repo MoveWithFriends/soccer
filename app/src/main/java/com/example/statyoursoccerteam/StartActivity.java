@@ -64,12 +64,12 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     private static final String SUBSTITUTE_LAYOUT_TAG = "Wissel";
     private static final String CHRONOMETER_TAG = "Chrono";
     private static final String GOALS_AGAINST_TAG = "Goals against";
+    private static final String YELLOW_CARD_LAYOUT_TAG = "Yellow card";
      private boolean running;
 
-    private Chronometer chronometer2;
     private Chronometer chronometer;
      long pauseOffset;
-     long timer = 10000;
+
 
 
     @Override
@@ -78,8 +78,6 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
-
 
         chronometer = (Chronometer) findViewById(R.id.chronometer_view);
         chronometer.setFormat("Time\n%s");
@@ -110,7 +108,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.start, menu);
 
-return true;
+        return true;
     }
 
 
@@ -239,10 +237,15 @@ return true;
         assists.setTag(ASSISTS_LAYOUT_TAG);
 
         substitute1 = (LinearLayout) findViewById(R.id.substitute_1);
+        substitute1.setTag(SUBSTITUTE_LAYOUT_TAG);
         substitute2 = (LinearLayout) findViewById(R.id.substitute_2);
+        substitute2.setTag(SUBSTITUTE_LAYOUT_TAG);
         substitute3 = (LinearLayout) findViewById(R.id.substitute_3);
+        substitute3.setTag(SUBSTITUTE_LAYOUT_TAG);
         substitute4 = (LinearLayout) findViewById(R.id.substitute_4);
+        substitute4.setTag(SUBSTITUTE_LAYOUT_TAG);
         substitute5 = (LinearLayout) findViewById(R.id.substitute_5);
+        substitute5.setTag(SUBSTITUTE_LAYOUT_TAG);
         goals_against = (LinearLayout) findViewById(R.id.score_oponent);
         goals_against.setTag(GOALS_AGAINST_TAG);
 
@@ -325,11 +328,8 @@ return true;
 
                 // Determines if this View can accept the dragged data
                 if (event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
-
                     return true;
-
                 }
-
                 return false;
 
             case DragEvent.ACTION_DRAG_ENTERED:
@@ -349,7 +349,6 @@ return true;
 
                 return true;
             case DragEvent.ACTION_DROP:
-                //TODO exchange with players (On pitch AND with substitutes)
 
                 // Gets the item containing the dragged data
                 ClipData.Item item = event.getClipData().getItemAt(0);
@@ -359,47 +358,52 @@ return true;
 
                 View vr = (View) event.getLocalState();
                 LinearLayout container = (LinearLayout) view;
+                if(container != null) {
+                    if (container.getTag() == null || (container.getTag() == SUBSTITUTE_LAYOUT_TAG)) {
+                        if (container.getChildAt(0) != null) {
+                            View target = container.getChildAt(0);
 
-                if(container.getTag() == null) {
-                    if(container.getChildAt(0) != null) {
-                        View target = container.getChildAt(0);
+                            LinearLayout oldOwner = (LinearLayout) dragged.getParent();
+                            if (oldOwner != container) {
+                                Log.d(TAG, "onDrag: old owener " + oldOwner.toString());
+                                Log.d(TAG, "onDrag: putted on " + target.toString());
+                                Log.d(TAG, "onDrag: dragged" + dragged.toString());
+                                Log.d(TAG, "onDrag: new location " + container.toString());
 
-                        LinearLayout oldOwner = (LinearLayout) dragged.getParent();
-                        Log.d(TAG, "onDrag: old owener "+oldOwner.toString());
-                        Log.d(TAG, "onDrag: putted on "+ target.toString());
-                        Log.d(TAG, "onDrag: dragged" + dragged.toString());
-                        Log.d(TAG, "onDrag: new location " + container.toString());
+                                oldOwner.removeView(dragged);
+                                container.removeView(target);
+                                container.addView(dragged);
+                                oldOwner.addView(target);
+                            }
+                        }
+                        //remove the dragged view
+                        ViewGroup oldOwners = (ViewGroup) vr.getParent();
+                        oldOwners.removeView(vr);
+                        container.addView(vr);//Add the dragged view
+                        vr.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
 
-                        oldOwner.removeView(dragged);
-                        container.removeView(target);
-                        container.addView(dragged);
-                        oldOwner.addView(target);
-                    }
-
-                    //remove the dragged view
-                    ViewGroup oldOwner = (ViewGroup) vr.getParent();
-                                            oldOwner.removeView(vr);
-                    container.addView(vr);//Add the dragged view
-                    vr.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
-
-                } else {
-                    if (container.getTag().toString().equals("Goals")) {
-                        Toast.makeText(this, "" + dragData + " made a goal", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (container.getTag().toString().equals("Goals")) {
+                            Toast.makeText(this, "" + dragData + " made a goal", Toast.LENGTH_SHORT).show();
                             score.setText(scores_pro.scorePro());
-
-                    } else if (container.getTag().toString().equals("Assists")) {
-                        Toast.makeText(this, "" + dragData + " made an assist", Toast.LENGTH_SHORT).show();
+                        } else if (container.getTag().toString().equals("Assists")) {
+                            Toast.makeText(this, "" + dragData + " made an assist", Toast.LENGTH_SHORT).show();
+                        } else if (container.getTag().toString().equals("Yellow")) {
+                            Toast.makeText(this, "" + dragData + " made an assist", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    vr.setVisibility(View.VISIBLE);
+                    vr.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
+                    //If u had not provided any color in ACTION_DRAG_STARTED then clear color filter.
+                    view.getBackground().clearColorFilter();
+                    // Invalidate the view to force a redraw in the new tint
+                    view.invalidate();
+
+                    // Returns true. DragEvent.getResult() will return true.
+                    return true;
+                } else {
+                    return false;
                 }
 
-                //If u had not provided any color in ACTION_DRAG_STARTED then clear color filter.
-                view.getBackground().clearColorFilter();
-                // Invalidate the view to force a redraw in the new tint
-                view.invalidate();
-
-                // Returns true. DragEvent.getResult() will return true.
-                return true;
 
             case DragEvent.ACTION_DRAG_ENDED:
                 // Turns off any color tinting
@@ -407,7 +411,6 @@ return true;
 
                 // Invalidates the view to force a redraw
                 view.invalidate();
-
 
                 // An unknown action type was received.
             default:
