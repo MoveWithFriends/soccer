@@ -1,42 +1,30 @@
 package com.example.statyoursoccerteam;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.ClipData;
 import android.content.ClipDescription;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.icu.text.Transliterator;
-import android.media.Image;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.DragEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewAnimator;
 
-import java.util.concurrent.TimeUnit;
 
-import static com.example.statyoursoccerteam.R.id.action_live_chrono;
+import static com.example.statyoursoccerteam.R.id.chronometer_view;
+import static com.example.statyoursoccerteam.R.id.red_card;
 
 
 public class StartActivity extends AppCompatActivity implements View.OnLongClickListener, View.OnDragListener {
@@ -55,6 +43,8 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     private LinearLayout substitute4;
     private LinearLayout substitute5;
     private LinearLayout goals_against;
+    private LinearLayout yellowcard;
+    private LinearLayout redcard;
     private static final String JOOST_VIEW_TAG = "Joost";
     private static final String NICK_VIEW_TAG = "Nick";
     private static final String STIJN_VIEW_TAG = "Stijn";
@@ -65,10 +55,11 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     private static final String CHRONOMETER_TAG = "Chrono";
     private static final String GOALS_AGAINST_TAG = "Goals against";
     private static final String YELLOW_CARD_LAYOUT_TAG = "Yellow card";
+    private static final String RED_CARD_LAYOUT_TAG = "Red card";
      private boolean running;
-
     private Chronometer chronometer;
      long pauseOffset;
+    Chrono chrono;
 
 
 
@@ -79,7 +70,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        chronometer = (Chronometer) findViewById(R.id.chronometer_view);
+        chronometer = (Chronometer) findViewById(chronometer_view);
         chronometer.setFormat("Time\n%s");
         chronometer.setBase(SystemClock.elapsedRealtime());
         findViews();
@@ -114,30 +105,26 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//         Chrono chrono = new Chrono( this, 0);
+         chrono = new Chrono( this);
 
         switch (item.getItemId()) {
             case R.id.play_action:
-                // User chose the "Settings" item, show the app settings UI...
-                Toast.makeText(this, "You pressed start", Toast.LENGTH_SHORT).show();
-                startChronometer();
-
+                    // User chose the "Settings" item, show the app settings UI...
+                    Toast.makeText(this, "You pressed start", Toast.LENGTH_SHORT).show();
+                    startChronometer();
                 return true;
 
             case R.id.pause_action:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                pauseChronometer();
-
+                    // User chose the "Favorite" action, mark the current item
+                    // as a favorite...
+                    pauseChronometer();
                 return true;
 
             case R.id.stop_action:
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
                 Toast.makeText(this, "You pressed stop", Toast.LENGTH_SHORT).show();
-
                     stopChronometer();
-
                 return true;
 
             default:
@@ -160,21 +147,17 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
 
     public void pauseChronometer(){
-
         if(running){
             showElapsedTime();
-
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             running = false;
-
         } else {
-           startChronometer();
+//           startChronometer();
         }
     }
 
     public void stopChronometer(){
-
         if(running) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.app_name);
@@ -206,8 +189,6 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     }
 
 
-
-
     //Find all views and set Tag to all draggable views
     private void findViews() {
         jurgen = (ImageView) findViewById(R.id.jurgen_view);
@@ -218,7 +199,6 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         nick.setTag(NICK_VIEW_TAG);
         stijn = (ImageView) findViewById(R.id.stijn_view);
         stijn.setTag(STIJN_VIEW_TAG);
-
     }
 
 
@@ -248,6 +228,10 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         substitute5.setTag(SUBSTITUTE_LAYOUT_TAG);
         goals_against = (LinearLayout) findViewById(R.id.score_oponent);
         goals_against.setTag(GOALS_AGAINST_TAG);
+        yellowcard = (LinearLayout) findViewById(R.id.yellow_card);
+        yellowcard.setTag(YELLOW_CARD_LAYOUT_TAG);
+        redcard = (LinearLayout) findViewById(red_card);
+        redcard.setTag(RED_CARD_LAYOUT_TAG);
 
         //add or remove any layout view that you don't want to accept dragged view
         findViewById(R.id.a_1_layout).setOnDragListener(this);
@@ -278,6 +262,8 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         substitute5.setOnDragListener(this);
         assists.setOnDragListener(this);
         goals.setOnDragListener(this);
+        yellowcard.setOnDragListener(this);
+        redcard.setOnDragListener(this);
     }
 
     @Override
@@ -325,7 +311,6 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         switch (action) {
             case DragEvent.ACTION_DRAG_STARTED:
 
-
                 // Determines if this View can accept the dragged data
                 if (event.getClipDescription().hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
                     return true;
@@ -333,7 +318,6 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
                 return false;
 
             case DragEvent.ACTION_DRAG_ENTERED:
-
                 view.getBackground().setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_IN);
                 view.invalidate();
 
@@ -357,41 +341,49 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
                 String dragData = item.getText().toString();
 
                 View vr = (View) event.getLocalState();
+                Log.d(TAG, "onDrag: view" + view.toString());
                 LinearLayout container = (LinearLayout) view;
-                if(container != null) {
-                    if (container.getTag() == null || (container.getTag() == SUBSTITUTE_LAYOUT_TAG)) {
-                        if (container.getChildAt(0) != null) {
-                            View target = container.getChildAt(0);
+                Log.d(TAG, "onDrag: container" + container.toString());
 
-                            LinearLayout oldOwner = (LinearLayout) dragged.getParent();
-                            if (oldOwner != container) {
-//                                Log.d(TAG, "onDrag: old owener " + oldOwner.toString());
-//                                Log.d(TAG, "onDrag: putted on " + target.toString());
-//                                Log.d(TAG, "onDrag: dragged" + dragged.toString());
-//                                Log.d(TAG, "onDrag: new location " + container.toString());
 
-                                oldOwner.removeView(dragged);
-                                container.removeView(target);
-                                container.addView(dragged);
-                                oldOwner.addView(target);
+                    if (container.getTag() != null) {
+                        switch (container.getTag().toString()) {
+                            case RED_CARD_LAYOUT_TAG:
+                                Toast.makeText(this, "" + dragData + " heeft rode kaart gekregen", Toast.LENGTH_SHORT).show();
+                                break;
+                            case YELLOW_CARD_LAYOUT_TAG:
+                                Toast.makeText(this, "" + dragData + " heeft gele kaart gekregen", Toast.LENGTH_SHORT).show();
+                                break;
+                            case GOALS_LAYOUT_TAG:
+                                Toast.makeText(this, "" + dragData + " made a goal", Toast.LENGTH_SHORT).show();
+                                score.setText(scores_pro.scorePro());
+                                break;
+                            case ASSISTS_LAYOUT_TAG:
+                                Toast.makeText(this, "" + dragData + " made an assist", Toast.LENGTH_SHORT).show();
+                                break;
+                            default:
+                                Toast.makeText(this, "Nothing to show", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    } else if ((container.getTag() == null || (container.getTag() == SUBSTITUTE_LAYOUT_TAG))) {
+                            if (container.getChildAt(0) != null) {
+                                View target = container.getChildAt(0);
+
+                                LinearLayout oldOwner = (LinearLayout) dragged.getParent();
+                                if (oldOwner != container) {
+                                    oldOwner.removeView(dragged);
+                                    container.removeView(target);
+                                    container.addView(dragged);
+                                    oldOwner.addView(target);
+                                }
                             }
+                            //remove the dragged view
+                            ViewGroup oldOwners = (ViewGroup) vr.getParent();
+                            oldOwners.removeView(vr);
+                            container.addView(vr);//Add the dragged view
+                            vr.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
                         }
-                        //remove the dragged view
-                        ViewGroup oldOwners = (ViewGroup) vr.getParent();
-                        oldOwners.removeView(vr);
-                        container.addView(vr);//Add the dragged view
-                        vr.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
 
-                    } else {
-                        if (container.getTag().toString().equals("Goals")) {
-                            Toast.makeText(this, "" + dragData + " made a goal", Toast.LENGTH_SHORT).show();
-                            score.setText(scores_pro.scorePro());
-                        } else if (container.getTag().toString().equals("Assists")) {
-                            Toast.makeText(this, "" + dragData + " made an assist", Toast.LENGTH_SHORT).show();
-                        } else if (container.getTag().toString().isEmpty()) {
-                            Toast.makeText(this, "" + dragData + " kan niet", Toast.LENGTH_SHORT).show();
-                        }
-                    }
                     vr.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
                     //If u had not provided any color in ACTION_DRAG_STARTED then clear color filter.
                     view.getBackground().clearColorFilter();
@@ -400,9 +392,6 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
                     // Returns true. DragEvent.getResult() will return true.
                     return true;
-                } else {
-                    return false;
-                }
 
 
             case DragEvent.ACTION_DRAG_ENDED:
@@ -413,9 +402,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
                 view.invalidate();
 
                 // An unknown action type was received.
-            default:
-                Log.e("DragDrop Example", "Unknown action type received by OnDragListener.");
-                break;
+
         }
         return false;
     }

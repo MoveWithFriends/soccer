@@ -1,6 +1,7 @@
 package com.example.statyoursoccerteam;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -103,7 +104,7 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
         TextView textView2 = holder.listItemPersonPhoneView;
         textView2.setText(persons.getPhone());
         ImageView imageView = holder.listItemPersonImage;
-//        imageView.setImageBitmap(joosticon.png);
+//        imageView.setImageBitmap();
 
     }
 

@@ -12,32 +12,42 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Chrono extends AppCompatActivity {
+import java.util.Observable;
+
+public class Chrono {
     private static final String TAG = "Chrono";
 
 
     public long pauseOffset;
     private Context context;
+    Chronometer chronometer;
+    private boolean running;
 
-
-    public Chrono( Context context, long pauseOffset) {
-        this.context = context;
-        this.pauseOffset = pauseOffset;
+    public interface Observer {
+        public void update(Observable o, Object arg);
     }
 
-    public void startChronometer(Chronometer chronometer){
-        Log.d(TAG, "startChronometer: " + pauseOffset);
+    // public interface die bij verandering de startactivity update.
 
 
-            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-            chronometer.start();
+    public Chrono(Context context) {
 
 
-        Log.d(TAG, "startChronometer: " + pauseOffset);
     }
 
 
-    public void pauseChronometer(Chronometer chronometer){
+
+    public void startChronometer( ){
+        Log.d(TAG, "startChronometer: " + pauseOffset);
+
+                chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+                chronometer.start();
+
+        Log.d(TAG, "startChronometer: " + pauseOffset);
+    }
+
+
+    public void pauseChronometer(){
 
         Log.d(TAG, "pauseChronometer: " + pauseOffset);
 
@@ -54,7 +64,7 @@ public class Chrono extends AppCompatActivity {
 
     }
 
-    public void stopChronometer(Chronometer chronometer){
+    public void stopChronometer(){
         Log.d(TAG, "stopChronometer: " + pauseOffset);
 
                     chronometer.stop();
@@ -64,7 +74,7 @@ public class Chrono extends AppCompatActivity {
 
     }
 
-    public void showWarningMessage(final Chronometer chronometer){
+    public void showWarningMessage( ){
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle(R.string.app_name);
@@ -73,7 +83,7 @@ public class Chrono extends AppCompatActivity {
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.dismiss();
-                            stopChronometer(chronometer);
+                            stopChronometer();
                         }
                     });
                     builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

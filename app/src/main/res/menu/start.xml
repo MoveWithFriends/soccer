@@ -1,44 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:layout="http://schemas.android.com/tools">
 
-<item android:id="@+id/action_live_chrono"
-    android:title=""
-    app:showAsAction="ifRoom"
-    app:actionLayout="@layout/search">
-    <Chronometer
-    android:id="@+id/chronometer_view2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textSize="30sp"
-    />
-</item>
+<!--<item android:id="@+id/action_live_chrono"-->
+<!--    android:title=""-->
+<!--    app:showAsAction="ifRoom"-->
+<!--    app:actionLayout="@layout/toolbar"-->
+<!--    >-->
+<include
+
+    app:layout="@layout/toolbar"/>
 
 
 
-    <!--    play icon -->
-    <item
-        android:id="@+id/play_action"
-        android:icon="@drawable/ic_play_arrow_black_24dp"
-        android:title="@string/play"
-        app:showAsAction="always"/>
-<!--        android:onClick="startChronometer"-->
 
 
-    <!--    pause icon -->
-    <item
-        android:id="@+id/pause_action"
-        android:icon="@drawable/ic_pause_black_24dp"
-        android:title="@string/pause"
-        app:showAsAction="always"
-        />
 
-    <!--    stop icon -->
-    <item
-        android:id="@+id/stop_action"
-        android:icon="@drawable/ic_stop_black_24dp"
-        android:title="@string/stop"
-        app:showAsAction="always"
-        />
 
 </menu>
