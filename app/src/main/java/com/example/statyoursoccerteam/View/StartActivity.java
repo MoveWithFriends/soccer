@@ -1,4 +1,4 @@
-package com.example.statyoursoccerteam;
+package com.example.statyoursoccerteam.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -33,6 +33,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewAnimator;
+
+import com.example.statyoursoccerteam.R;
+import com.example.statyoursoccerteam.Scores;
 
 import java.util.concurrent.TimeUnit;
 
@@ -365,10 +368,6 @@ return true;
                         View target = container.getChildAt(0);
 
                         LinearLayout oldOwner = (LinearLayout) dragged.getParent();
-                        Log.d(TAG, "onDrag: old owener "+oldOwner.toString());
-                        Log.d(TAG, "onDrag: putted on "+ target.toString());
-                        Log.d(TAG, "onDrag: dragged" + dragged.toString());
-                        Log.d(TAG, "onDrag: new location " + container.toString());
 
                         oldOwner.removeView(dragged);
                         container.removeView(target);

@@ -28,7 +28,7 @@
 
 
   <TextView
-      android:id="@+id/list_item_name"
+      android:id="@+id/list_item_userId"
       style="@style/TextAppearance.AppCompat.Large"
       android:layout_width="521dp"
       android:layout_height="31dp"
@@ -41,7 +41,7 @@
       />
 
   <TextView
-      android:id="@+id/list_item_phone"
+      android:id="@+id/list_item_Id"
       style="@style/TextAppearance.AppCompat.Small"
       android:layout_width="522dp"
       android:layout_height="18dp"
@@ -51,6 +51,34 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.042"
       app:layout_constraintStart_toEndOf="@+id/list_item_image"
-      app:layout_constraintTop_toBottomOf="@+id/list_item_name"
+      app:layout_constraintTop_toBottomOf="@+id/list_item_userId"
+      />
+
+  <TextView
+      android:id="@+id/list_item_Title"
+      style="@style/TextAppearance.AppCompat.Small"
+      android:layout_width="522dp"
+      android:layout_height="18dp"
+      android:layout_row="0"
+      android:layout_column="2"
+      android:gravity="start"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.042"
+      app:layout_constraintStart_toEndOf="@+id/list_item_image"
+      app:layout_constraintTop_toBottomOf="@+id/list_item_Id"
+      />
+
+  <TextView
+      android:id="@+id/list_item_Text"
+      style="@style/TextAppearance.AppCompat.Small"
+      android:layout_width="522dp"
+      android:layout_height="18dp"
+      android:layout_row="0"
+      android:layout_column="2"
+      android:gravity="start"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.042"
+      app:layout_constraintStart_toEndOf="@+id/list_item_image"
+      app:layout_constraintTop_toBottomOf="@+id/list_item_Title"
       />
 </androidx.constraintlayout.widget.ConstraintLayout>
