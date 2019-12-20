@@ -2,20 +2,32 @@ package com.example.statyoursoccerteam.Data;
 
 public class Person {
 
-    private String name;
+    private String FirstName;
+    private String LastName;
     private String phone;
+    private String BackNumber;
+    private String KNVBNumber;
+    private String dateOfBirth;
+    private String position;
+    private String gender;
 
 
-    public Person(String name, String phone) {
-        this.name = name;
+    public Person(String firstName, String lastName, String phone, String backNumber, String KNVBNumber, String dateOfBirth, String position, String gender) {
+        FirstName = firstName;
+        LastName = lastName;
         this.phone = phone;
+        BackNumber = backNumber;
+        this.KNVBNumber = KNVBNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.position = position;
+        this.gender = gender;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return FirstName;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getLastName() {
+        return LastName;
     }
 }

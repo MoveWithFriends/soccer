@@ -1,8 +1,6 @@
 package com.example.statyoursoccerteam;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.selection.SelectionTracker;
-import androidx.recyclerview.selection.StorageStrategy;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.statyoursoccerteam.Data.Person;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonViewHolder> {
     private static final String TAG = MyViewAdapter.class.getSimpleName();
@@ -30,19 +25,16 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
 
     class PersonViewHolder extends RecyclerView.ViewHolder {
 
-
         // Create a TextView variable called listItemNumberView
         TextView listItemPersonNameView;
         TextView listItemPersonPhoneView;
         ImageView listItemPersonImage;
-
-
         // Create a constructor for PersonViewHolder that accepts a View called itemView as a parameter
 
         public PersonViewHolder(View itemView) {
             super(itemView);
-            listItemPersonNameView = (TextView) itemView.findViewById(R.id.list_item_name);
-            listItemPersonPhoneView =(TextView) itemView.findViewById(R.id.list_item_phone);
+            listItemPersonNameView = (TextView) itemView.findViewById(R.id.list_item_firstname);
+            listItemPersonPhoneView =(TextView) itemView.findViewById(R.id.list_item_lastname);
             listItemPersonImage = (ImageView) itemView.findViewById(R.id.list_item_image);
         }
 
@@ -50,8 +42,6 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
             listItemPersonNameView.setText(String.valueOf(listIndex));
             listItemPersonPhoneView.setText(String.valueOf(listIndex));
         }
-
-
     }
 
     /*
@@ -100,11 +90,11 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
         Person persons = mPersons.get(position);
         // Set item views based on your views and data model
         TextView textView1 = holder.listItemPersonNameView;
-        textView1.setText(persons.getName());
+        textView1.setText(persons.getFirstName());
         TextView textView2 = holder.listItemPersonPhoneView;
-        textView2.setText(persons.getPhone());
+        textView2.setText(persons.getLastName());
         ImageView imageView = holder.listItemPersonImage;
-//        imageView.setImageBitmap();
+        imageView.setImageResource(R.drawable.jurgenicon);
 
     }
 

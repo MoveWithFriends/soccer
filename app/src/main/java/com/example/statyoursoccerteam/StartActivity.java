@@ -2,6 +2,7 @@ package com.example.statyoursoccerteam;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.ClipData;
 import android.content.ClipDescription;
@@ -87,9 +88,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
                 score.setText(scores.scoreAgainst());
                 return false;
             }
-
         });
-
     }
 
 

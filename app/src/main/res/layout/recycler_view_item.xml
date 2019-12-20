@@ -28,7 +28,7 @@
 
 
   <TextView
-      android:id="@+id/list_item_name"
+      android:id="@+id/list_item_firstname"
       style="@style/TextAppearance.AppCompat.Large"
       android:layout_width="521dp"
       android:layout_height="31dp"
@@ -41,7 +41,7 @@
       />
 
   <TextView
-      android:id="@+id/list_item_phone"
+      android:id="@+id/list_item_lastname"
       style="@style/TextAppearance.AppCompat.Small"
       android:layout_width="522dp"
       android:layout_height="18dp"
@@ -51,6 +51,6 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.042"
       app:layout_constraintStart_toEndOf="@+id/list_item_image"
-      app:layout_constraintTop_toBottomOf="@+id/list_item_name"
+      app:layout_constraintTop_toBottomOf="@+id/list_item_firstname"
       />
 </androidx.constraintlayout.widget.ConstraintLayout>

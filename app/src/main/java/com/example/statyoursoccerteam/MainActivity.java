@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.Toast;
 
 
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.statyoursoccerteam.Data.Person;
+import com.example.statyoursoccerteam.Data.PersonBuilder;
 
 import java.util.ArrayList;
 
@@ -32,27 +32,25 @@ public class MainActivity extends AppCompatActivity {
         // Create fake News
         ArrayList<Person> data = new ArrayList<>();
 
-        data.add(new Person("Joost Oomen", "0618194626"));
-        data.add(new Person("Jurgen Paapen", "0617896534"));
-        data.add(new Person("Nick Sluijters", "0678965432"));
-        data.add(new Person("Stijn Pijman", "0698765213"));
-        data.add(new Person("Corne Snoijs", "0642536711"));
-        data.add(new Person("Wouter Plaatman", "0664646464"));
-        data.add(new Person("Johan Potters", "0699786754"));
-        data.add(new Person("Paul de Mast", "0611223344"));
-        data.add(new Person("Frans Spijkerman", "0610101010"));
-        data.add(new Person("Wouter Plaatman", "0664646464"));
-        data.add(new Person("Johan Potters", "0699786754"));
-        data.add(new Person("Paul de Mast", "0611223344"));
-        data.add(new Person("Frans Spijkerman", "0610101010"));
-        data.add(new Person("Wouter Plaatman", "0664646464"));
-        data.add(new Person("Johan Potters", "0699786754"));
-        data.add(new Person("Paul de Mast", "0611223344"));
-        data.add(new Person("Frans Spijkerman", "0610101010"));
-        data.add(new Person("Wouter Plaatman", "0664646464"));
-        data.add(new Person("Johan Potters", "0699786754"));
-        data.add(new Person("Paul de Mast", "0611223344"));
-        data.add(new Person("Frans Spijkerman", "0610101010"));
+        data.add(new PersonBuilder().setFirstName("Joost").setLastName("Oomen").createPerson());
+        data.add(new PersonBuilder().setFirstName("Jurgen ").setLastName("Paapen").createPerson());
+        data.add(new PersonBuilder().setFirstName("Nick ").setLastName("Sluijters").createPerson());
+        data.add(new PersonBuilder().setFirstName("Stijn ").setLastName("Pijman").createPerson());
+        data.add(new PersonBuilder().setFirstName("Corne ").setLastName("Snoijs").createPerson());
+        data.add(new PersonBuilder().setFirstName("Wouter ").setLastName("Plaatman").createPerson());
+        data.add(new PersonBuilder().setFirstName("Johan ").setLastName("Potters").createPerson());
+        data.add(new PersonBuilder().setFirstName("Paul ").setLastName("de Mast").createPerson());
+        data.add(new PersonBuilder().setFirstName("Frans ").setLastName("Spijkerman").createPerson());
+        data.add(new PersonBuilder().setFirstName("Joost").setLastName("Oomen").createPerson());
+        data.add(new PersonBuilder().setFirstName("Jurgen ").setLastName("Paapen").createPerson());
+        data.add(new PersonBuilder().setFirstName("Nick ").setLastName("Sluijters").createPerson());
+        data.add(new PersonBuilder().setFirstName("Stijn ").setLastName("Pijman").createPerson());
+        data.add(new PersonBuilder().setFirstName("Corne ").setLastName("Snoijs").createPerson());
+        data.add(new PersonBuilder().setFirstName("Wouter ").setLastName("Plaatman").createPerson());
+        data.add(new PersonBuilder().setFirstName("Johan ").setLastName("Potters").createPerson());
+        data.add(new PersonBuilder().setFirstName("Paul ").setLastName("de Mast").createPerson());
+        data.add(new PersonBuilder().setFirstName("Frans ").setLastName("Spijkerman").createPerson());
+
 
 // Get a reference of our RecyclerView from xml
         // It allows us the do things like set the Adapter of the RecyclerView and toggle the
