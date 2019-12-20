@@ -1,4 +1,4 @@
-package com.example.statyoursoccerteam;
+package com.example.statyoursoccerteam.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +23,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.example.statyoursoccerteam.Chrono;
+import com.example.statyoursoccerteam.R;
+import com.example.statyoursoccerteam.Scores;
 
 import static com.example.statyoursoccerteam.R.id.chronometer_view;
 import static com.example.statyoursoccerteam.R.id.red_card;
