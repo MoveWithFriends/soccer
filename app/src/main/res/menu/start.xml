@@ -19,7 +19,7 @@
     <!--    play icon -->
     <item
         android:id="@+id/play_action"
-        android:icon="@drawable/ic_play_arrow_black_24dp"
+        android:icon="@drawable/baseline_play_arrow_white_48dp"
         android:title="@string/play"
         app:showAsAction="always"/>
     <!--        android:onClick="startChronometer"-->
@@ -28,7 +28,7 @@
     <!--    pause icon -->
     <item
         android:id="@+id/pause_action"
-        android:icon="@drawable/ic_pause_black_24dp"
+        android:icon="@drawable/baseline_pause_white_48dp"
         android:title="@string/pause"
         app:showAsAction="always"
         />
@@ -36,7 +36,7 @@
     <!--    stop icon -->
     <item
         android:id="@+id/stop_action"
-        android:icon="@drawable/ic_stop_black_24dp"
+        android:icon="@drawable/baseline_stop_white_48dp"
         android:title="@string/stop"
         app:showAsAction="always"
         />

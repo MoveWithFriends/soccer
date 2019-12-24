@@ -2,17 +2,13 @@ package com.example.statyoursoccerteam;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.AsyncTask;
 import android.os.SystemClock;
 import android.util.Log;
-import android.view.View;
 import android.widget.Chronometer;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Observable;
 
 public class Chrono {
     private static final String TAG = "Chrono";
@@ -21,56 +17,46 @@ public class Chrono {
     public long pauseOffset;
     private Context context;
     Chronometer chronometer;
-    private boolean running;
+    public boolean running;
+    private long elapsedMillis;
 
-    public interface Observer {
-        public void update(Observable o, Object arg);
-    }
-
-    // public interface die bij verandering de startactivity update.
+//    public interface Observer {
+//        public void update(Observable o, Object arg);
+//    }
+//
+//    // public interface die bij verandering de startactivity update.
 
 
     public Chrono(Context context) {
-
+            pauseOffset = 0;
+            running = false;
+//        chronometer.setBase(SystemClock.elapsedRealtime());
 
     }
 
 
 
-    public void startChronometer( ){
-        Log.d(TAG, "startChronometer: " + pauseOffset);
-
-                chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-                chronometer.start();
-
-        Log.d(TAG, "startChronometer: " + pauseOffset);
+    public void startChronometer(Chronometer chronometer){
+            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            chronometer.start();
+        Log.d(TAG, "startChronometer: en chronometer is" + SystemClock.elapsedRealtime());
+            running  = true;
     }
 
 
-    public void pauseChronometer(){
 
-        Log.d(TAG, "pauseChronometer: " + pauseOffset);
-
-
+    public void pauseChronometer(Chronometer chronometer){
             showElapsedTime(chronometer);
-
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-
-         Log.d(TAG, "pauseChronometer: " + pauseOffset);
-
-
-
-
+            running = false;
     }
 
-    public void stopChronometer(){
+    public void stopChronometer(Chronometer chronometer){
         Log.d(TAG, "stopChronometer: " + pauseOffset);
-
                     chronometer.stop();
                     pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-
-
+        Log.d(TAG, "stopChronometer: " + pauseOffset);
 
     }
 
@@ -83,7 +69,7 @@ public class Chrono {
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.dismiss();
-                            stopChronometer();
+                            stopChronometer(chronometer);
                         }
                     });
                     builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -100,11 +86,11 @@ public class Chrono {
 
 
 
-    public void showElapsedTime(Chronometer chronometer) {
-
-        long elapsedMillis = SystemClock.elapsedRealtime()
+    public long showElapsedTime(Chronometer chronometer) {
+        Log.d(TAG, "showElapsedTime: pauseoffset = " + pauseOffset);
+        return elapsedMillis = (long) SystemClock.elapsedRealtime()
                 - pauseOffset;
-        Toast.makeText(this.context,
-                "Elapsed milliseconds: " + elapsedMillis, Toast.LENGTH_SHORT).show();
+
+
     }
 }

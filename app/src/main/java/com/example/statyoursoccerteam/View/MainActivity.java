@@ -31,7 +31,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "MainActivity";
     private RecyclerView recyclerView;
     private MyViewAdapter adapter;
     private List<Player> playerArrayList;
@@ -63,6 +63,7 @@ private void loadJSON() {
 //    Log.wtf("URL Called", call.request().url() + "");
     SoccerStatsApi soccerStatsApi = retrofit.create(SoccerStatsApi.class);
     Call<List<Player>> call = soccerStatsApi.getPosts();
+    Log.d(TAG, "loadJSON: so far so good?" + call.toString());
     call.enqueue(new Callback<List<Player>>() {
         @Override
         public void onResponse(Call<List<Player>> call, Response<List<Player>> response) {
