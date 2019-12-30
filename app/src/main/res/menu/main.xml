@@ -16,9 +16,9 @@
     <item
         android:id="@+id/start_game"
 
-        android:title="Start game"
-        app:showAsAction="always"
-        />
+        android:icon="@drawable/icons8_whistle_100"
+        android:title="@string/start_game"
+        app:showAsAction="always" />
 
 
 

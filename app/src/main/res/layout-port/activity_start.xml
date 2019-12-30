@@ -35,7 +35,7 @@ tools:context=".View.StartActivity">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="ASSIST"
+            android:text="@string/assist"
             android:textSize="11sp"
             />
     </LinearLayout>
@@ -142,7 +142,7 @@ tools:context=".View.StartActivity">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="GOAL"
+            android:text="@string/goal"
             android:textSize="12sp"
             />
     </LinearLayout>
@@ -175,7 +175,7 @@ tools:context=".View.StartActivity">
             android:layout_height="wrap_content"
             android:gravity="center"
             android:singleLine="false"
-            android:text="YELLOW CARD"
+            android:text="@string/yellow_card"
             android:textColor="@color/black"
             android:textSize="15sp"
             />
@@ -256,7 +256,7 @@ tools:context=".View.StartActivity">
             android:layout_height="wrap_content"
             android:gravity="center"
             android:singleLine="false"
-            android:text="RED \nCARD"
+            android:text="@string/red_ncard"
             android:textColor="@color/black"
             android:textSize="16sp"
             />
@@ -487,16 +487,8 @@ tools:context=".View.StartActivity">
         android:gravity="center"
         android:orientation="vertical"
         android:background="@drawable/customborder"
-        >
-
-        <Chronometer
-            android:id="@+id/chronometer_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            />
-
-    </LinearLayout>
+        tools:ignore="NestedWeights"
+        />
     <LinearLayout
         android:id="@+id/substitute_1"
         android:layout_width="match_parent"

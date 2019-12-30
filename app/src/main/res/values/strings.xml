@@ -6,4 +6,9 @@
     <string name="play">Play</string>
     <string name="pause">Pause</string>
     <string name="stop">Stop</string>
+    <string name="start_game">Start game</string>
+    <string name="assist">ASSIST</string>
+    <string name="goal">GOAL</string>
+    <string name="yellow_card">YELLOW CARD</string>
+    <string name="red_ncard">RED  CARD</string>
 </resources>

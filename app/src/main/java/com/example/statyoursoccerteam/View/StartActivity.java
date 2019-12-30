@@ -28,7 +28,6 @@ import com.example.statyoursoccerteam.Chrono;
 import com.example.statyoursoccerteam.R;
 import com.example.statyoursoccerteam.Scores;
 
-import static com.example.statyoursoccerteam.R.id.chronometer_view;
 import static com.example.statyoursoccerteam.R.id.red_card;
 
 
@@ -64,16 +63,13 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     public boolean running;
     public Chronometer chronometer;
     public Chrono chrono;
-
+    private long pauseOffset;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-//        chronometer = (Chronometer) findViewById(chronometer_view);
-//        chronometer.setFormat("Time\n%s");
-//        chronometer.setBase(SystemClock.elapsedRealtime());
         getSupportActionBar().setTitle(null);
 
         findViews();
@@ -86,7 +82,6 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
             Scores scores = new Scores();
             @Override
             public boolean onLongClick(View v) {
-                Log.d(TAG, "onClick: Pressed field");
                 score.setText(scores.scoreAgainst());
                 return false;
             }
@@ -96,50 +91,35 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.start, menu);
 
         return true;
+
     }
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        chrono = new Chrono( this);
+        Chrono chrono = Chrono.getInstance(this);
 
         chronometer = (Chronometer) findViewById(R.id.chronometer_view3);
-        chronometer.setBase(SystemClock.elapsedRealtime());
-
         switch (item.getItemId()) {
             case R.id.play_action:
-                if(!running) {
-                    // User chose the "Settings" item, show the app settings UI...
                     Toast.makeText(this, "You pressed start", Toast.LENGTH_SHORT).show();
-                    Log.d(TAG, "onOptionsItemSelected: running before start " + running);
                     chrono.startChronometer(chronometer);
-                    Log.d(TAG, "onOptionsItemSelected: running after start " + running);
-                    running = true;
-                }
+                Log.d(TAG, "onOptionsItemSelected: " + chronometer);
                 return true;
 
             case R.id.pause_action:
-                Log.d(TAG, "onOptionsItemSelected: elapsed time is " + chrono.showElapsedTime(chronometer));
-                if(running) {
                     chrono.pauseChronometer(chronometer);
-                    running = false;
-                }
-                return true;
+                Toast.makeText(this, "Elapsed time is " + (chrono.showElapsedTime(chronometer)) + " seconds", Toast.LENGTH_SHORT).show();
+                    return true;
 
             case R.id.stop_action:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                Log.d(TAG, "onOptionsItemSelected: running before stop " + running);
-                if(running){
-                    Toast.makeText(this, "You pressed stop", Toast.LENGTH_SHORT).show();
-                    chrono.stopChronometer(chronometer);
-                    running = false;
-                }
+                    chrono.showWarningMessage(chronometer);
+//                    chrono.stopChronometer(chronometer);
+                Toast.makeText(this, "Elapsed time is " + (chrono.showElapsedTime(chronometer)) + " seconds", Toast.LENGTH_SHORT).show();
                 return true;
 
             default:
@@ -149,60 +129,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         }
     }
 
-    //TODO Chrono methoden moeten eigenlijk niet in deze activity staan. Er moeten eigenlijk methoden in de class chrono worden afgedraaid en het resulataat hier zichtbaar maar dat is me ngo niet gelukt.
-   //Misschien moet het een ASyncTask worden??
 
-//    public void startChronometer(){
-//        if(!running){
-//            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-//            chronometer.start();
-//            running  = true;
-//        }
-//    }
-//
-//
-//    public void pauseChronometer(){
-//        if(running){
-//            showElapsedTime();
-//            chronometer.stop();
-//            pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-//            running = false;
-//        } else {
-////           startChronometer();
-//        }
-//    }
-//
-//    public void stopChronometer(){
-//        if(running) {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setTitle(R.string.app_name);
-//            builder.setMessage("Do you want to stop ?");
-//            builder.setIcon(R.drawable.ic_warning_black_24dp);
-//            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                public void onClick(DialogInterface dialog, int id) {
-//                    dialog.dismiss();
-//                    chronometer.stop();
-//                    pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-//                    running = false;
-//                }
-//            });
-//            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                public void onClick(DialogInterface dialog, int id) {
-//                    dialog.dismiss();
-//                }
-//            });
-//            AlertDialog alert = builder.create();
-//            alert.show();
-//        }
-//    }
-//
-//    public void showElapsedTime() {
-//        long elapsedMillis = SystemClock.elapsedRealtime()
-//                - chronometer.getBase();
-//        Toast.makeText(this,
-//                "Elapsed milliseconds: " + elapsedMillis, Toast.LENGTH_SHORT).show();
-//    }
-//
 
     //Find all views and set Tag to all draggable views
     private void findViews() {
@@ -429,6 +356,8 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         container.addView(vr);//Add the dragged view
         vr.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
     }
+
+
 
 
 }
