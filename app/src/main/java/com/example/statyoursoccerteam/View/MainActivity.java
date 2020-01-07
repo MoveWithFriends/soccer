@@ -1,10 +1,7 @@
 package com.example.statyoursoccerteam.View;
 
-<<<<<<< HEAD
 import android.app.ProgressDialog;
 import android.content.Context;
-=======
->>>>>>> 2d11c611769f59ad01c0990749d20807d16e9326
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,15 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-<<<<<<< HEAD
 
-=======
->>>>>>> 2d11c611769f59ad01c0990749d20807d16e9326
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-<<<<<<< HEAD
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,13 +26,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-=======
->>>>>>> 2d11c611769f59ad01c0990749d20807d16e9326
 import com.example.statyoursoccerteam.Data.Player;
 import com.example.statyoursoccerteam.Data.SoccerStatsApi;
 import com.example.statyoursoccerteam.Data.Teams;
 import com.example.statyoursoccerteam.R;
-<<<<<<< HEAD
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,30 +53,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView pList;
     private DividerItemDecoration dividerItemDecoration;
     private RecyclerView.Adapter adapter;
-=======
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
-    private RecyclerView recyclerView;
-    private MyViewAdapter adapter;
-    private List<Player> playerArrayList;
-
-    public int NUM_ITEMS = 100;
-    public static final String EXTRA_MESSAGE = "com.example.statyoursoccerteam.View.StartActivity";
-
->>>>>>> 2d11c611769f59ad01c0990749d20807d16e9326
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -101,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int selectedTeam = parent.getSelectedItemPosition();
-                Log.d("Bitcoin", "Selected: " + selectedTeam);
-                Log.d("Bitcoin", "URL: " + +selectedTeam);
+                Log.d("Team", "Selected: " + selectedTeam);
+                Log.d("Team", "URL: " + +selectedTeam);
 
                 retrievePlayers("players" + "/" + (selectedTeam + 1));
 
@@ -118,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         dividerItemDecoration = new DividerItemDecoration(pList.getContext(), linearLayoutManager.getOrientation());
     }
 
-<<<<<<< HEAD
 
     private void retrieveTeamJson(String url) {
 
@@ -212,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                             pList.addItemDecoration(dividerItemDecoration);
                             pList.setAdapter(adapter);
                             removeSimpleProgressDialog();
-                            
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -229,38 +197,6 @@ public class MainActivity extends AppCompatActivity {
         // request queue
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-=======
-    private void initViews() {
-        recyclerView = (RecyclerView) findViewById(R.id.rv);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        loadJSON();
-    }
-
-    private void loadJSON() {
-        playerArrayList = new ArrayList<>();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://jsonplaceholder.typicode.com/").addConverterFactory(GsonConverterFactory.create()).build();
-//    SoccerStatsApi service = RetrofitInstance.getRetrofitInstance().create(SoccerStatsApi.class);
-
-//    Call<PlayerList> call = service.getPosts();
-
-//    Log.wtf("URL Called", call.request().url() + "");
-        SoccerStatsApi soccerStatsApi = retrofit.create(SoccerStatsApi.class);
-        Call<List<Player>> call = soccerStatsApi.getPosts();
-        Log.d(TAG, "loadJSON: so far so good?" + call.toString());
-        call.enqueue(new Callback<List<Player>>() {
-            @Override
-            public void onResponse(Call<List<Player>> call, Response<List<Player>> response) {
-                playerArrayList = response.body();
-                adapter = new MyViewAdapter(getApplicationContext(), playerArrayList);
-                recyclerView.setAdapter(adapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<Player>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Uhoh, something went wrong ...", Toast.LENGTH_LONG).show();
-            }
-        });
->>>>>>> 2d11c611769f59ad01c0990749d20807d16e9326
     }
 
     @Override
@@ -276,17 +212,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.start_game:
-                // User chose the "Start" item, starting the start activity..
+                // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(this, "You pressed game start", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, StartActivity.class);
                 startActivity(intent);
                 return true;
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 2d11c611769f59ad01c0990749d20807d16e9326
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
