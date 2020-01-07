@@ -12,12 +12,13 @@ package com.example.statyoursoccerteam.View;
         import com.example.statyoursoccerteam.Data.Player;
         import com.example.statyoursoccerteam.R;
 
+        import java.util.ArrayList;
         import java.util.List;
 
 public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonViewHolder> {
 
     private Context context;
-    private List<Player> playerList;
+    private List<Player> playerList = new ArrayList<>();
 
     public MyViewAdapter(Context context, List<Player> playerList) {
         this.context = context;
@@ -28,16 +29,15 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
     @NonNull
     @Override
     public PersonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent,false);
         return new PersonViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PersonViewHolder holder, int position) {
-        holder.IdTv.setText(playerList.get(position).getId());
-        holder.UserIdTv.setText(playerList.get(position).getUserId());
-        holder.TitleTv.setText(playerList.get(position).getTitle());
-        holder.TextTv.setText(playerList.get(position).getText());
+        holder.firstName.setText(playerList.get(position).getFirstName());
+        holder.shirtNumber.setText(playerList.get(position).getShirtNumber());
+        holder.lastName.setText(playerList.get(position).getLastName());
     }
 
     @Override
@@ -46,13 +46,14 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
     }
 
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
-        public TextView UserIdTv, IdTv, TitleTv, TextTv;
+        public TextView firstName, shirtNumber, lastName;
         public PersonViewHolder(View itemView) {
             super(itemView);
-            UserIdTv = itemView.findViewById(R.id.list_item_userId);
-            IdTv = itemView.findViewById(R.id.list_item_Id);
-            TitleTv = itemView.findViewById(R.id.list_item_Title);
-            TextTv = itemView.findViewById(R.id.list_item_Text);
+
+            firstName = itemView.findViewById(R.id.playerFirstName);
+            lastName = itemView.findViewById(R.id.playerLastName);
+            shirtNumber = itemView.findViewById(R.id.shirtNumber);
+
         }
     }
 }

@@ -1,35 +1,42 @@
 package com.example.statyoursoccerteam.Data;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Player {
 
-    private String userId;
-    private String id;
-    private String Title;
+    @SerializedName("firstName")
+    @Expose
+    private String firstName;
+    @SerializedName("lastName")
+    @Expose
+    private String lastName;
+    @SerializedName("shirtNumber")
+    @Expose
+    private String shirtNumber;
 
-    @SerializedName("body")
-    private String text;
 
-    public Player(String userId, String id, String title, String text) {
-        this.userId = userId;
-        this.id = id;
-        Title = title;
-        this.text = text;
+    public String getFirstName() {
+        return firstName;
     }
 
-
-    public String getUserId() { return userId; }
-
-    public String getId() {
-        return id;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getTitle() {
-        return Title;
+    public String getLastName() {
+        return lastName;
     }
 
-    public String getText() {
-        return text;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getShirtNumber() {
+        return shirtNumber;
+    }
+
+    public void setShirtNumber(String shirtNumber) {
+        this.shirtNumber = shirtNumber;
     }
 }
