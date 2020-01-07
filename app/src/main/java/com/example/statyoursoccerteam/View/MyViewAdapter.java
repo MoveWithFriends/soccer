@@ -1,18 +1,18 @@
 package com.example.statyoursoccerteam.View;
 
-        import android.content.Context;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.TextView;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
-        import androidx.annotation.NonNull;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-        import com.example.statyoursoccerteam.Data.Player;
-        import com.example.statyoursoccerteam.R;
+import com.example.statyoursoccerteam.Data.Player;
+import com.example.statyoursoccerteam.R;
 
-        import java.util.List;
+import java.util.List;
 
 public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonViewHolder> {
 
@@ -28,7 +28,7 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
     @NonNull
     @Override
     public PersonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_player, parent, false);
         return new PersonViewHolder(view);
     }
 
@@ -47,6 +47,7 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
 
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
         public TextView UserIdTv, IdTv, TitleTv, TextTv;
+
         public PersonViewHolder(View itemView) {
             super(itemView);
             UserIdTv = itemView.findViewById(R.id.list_item_userId);

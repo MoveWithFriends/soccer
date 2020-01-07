@@ -1,44 +1,51 @@
 package com.example.statyoursoccerteam;
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Chronometer;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.example.statyoursoccerteam.View.StartActivity;
 
-public class Chrono {
+
+public class Chrono  {
     private static final String TAG = "Chrono";
-    private final Context context;
-
-
-    public long pauseOffset;
-
-
-    public Chrono(Context context) {
-        pauseOffset = 0;
-        this.context = context;
-        running = false;
-    }
-
-    public boolean running;
+    private Context context;
+    public boolean running = false;
+    public int elapsedtime = 0;
+    public long pauseOffset = 0;
     private long elapsedSecs;
 
     //Implement Chrono as a Singleton
-    private static Chrono instance = null;
+    public static Chrono instance = null;
+    private Chronometer chronometer;
+
+//    public Chrono(Context context) {
+//        super(context);
+//    }
+
+    private Chrono(Context context)  {
+        this.context = context;
+    }
+
+    public static Chrono getInstance() {
+        return instance;
+    }
+
 
 
     /**
      * Get an instance of the app's singleton chrono object
+     *
      * @param context - the chrono context from which it is called
-     * @return a Chrono object
+     * @return a Chrono instance
      */
 
-    public static Chrono getInstance(Context context) {
-        if (instance == null){
+    public static Chrono getInstance(StartActivity context) {
+        if (instance == null) {
             Log.d(TAG, "getInstance: creating a new instance");
             instance = new Chrono(context);
         }
@@ -46,19 +53,33 @@ public class Chrono {
     }
 
 
-    public void startChronometer(Chronometer chronometer){
-        if(!running){
-            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+    public void startChronometer(Chronometer chronometer) {
+        Log.d(TAG, "startChronometer: running ? " + running);
+
+        if (!running) {
+//            Log.d(TAG, "startChronometer starttimer -: " + StartActivity.starttimer);
+            if (pauseOffset==0){
+                chronometer.setBase(SystemClock.elapsedRealtime() - (StartActivity.starttimer*1000));
+            } else {
+                chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
+            }
+                chronometer.start();
+
+            running = true;
+
+        } else {
+            chronometer.setBase(SystemClock.elapsedRealtime() - (StartActivity.starttimer*1000));
             chronometer.start();
-            running  = true;
+//            running = false;
+
         }
+
     }
 
 
-
-    public void pauseChronometer(Chronometer chronometer){
+    public void pauseChronometer(Chronometer chronometer) {
 //        showElapsedTime(chronometer);
-        if(running){
+        if (running) {
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             running = false;
@@ -67,8 +88,8 @@ public class Chrono {
         }
     }
 
-    public void stopChronometer(final Chronometer chronometer){
-        if(running){
+    public void stopChronometer(final Chronometer chronometer) {
+        if (running) {
             //TODO make warning massage to confirm stopping the registration of game events
             // if confirmed then show summary activity
             // if confirmation is negative then time will continue
@@ -82,8 +103,8 @@ public class Chrono {
 
     }
 
-    public void showWarningMessage(final Chronometer chronometer ){
-        if(running) {
+    public void showWarningMessage(final Chronometer chronometer) {
+        if (running) {
             //TODO make context startactivity to show the message
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle(R.string.app_name);
@@ -92,13 +113,13 @@ public class Chrono {
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
+                    //TODO start activity to make summary
                     stopChronometer(chronometer);
                 }
             });
             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
-                    ;
                 }
 
             });
@@ -109,9 +130,18 @@ public class Chrono {
     }
 
 
-
     public long showElapsedTime(Chronometer chronometer) {
-            elapsedSecs = (long) (SystemClock.elapsedRealtime()-chronometer.getBase())/1000;
+//        Log.d(TAG, "showElapsedTime: " + chronometer);
+        if(chronometer!=null) {
+            if (running) {
+                elapsedSecs = (long) (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;
+            } else {
+                elapsedSecs = (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;
+            }
+
+        } else {
+            elapsedSecs = 0;
+        }
         return elapsedSecs;
     }
 

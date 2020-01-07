@@ -2,18 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_live_chrono"
+    <item
+        android:id="@+id/action_live_chrono"
         android:title=""
-        app:showAsAction="ifRoom"
-        app:actionLayout="@layout/search">
+        app:actionLayout="@layout/chrono"
+        app:showAsAction="always">
         <Chronometer
             android:id="@+id/chronometer_view2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            />
+            android:textSize="30sp" />
     </item>
-
 
 
     <!--    play icon -->
@@ -21,7 +20,7 @@
         android:id="@+id/play_action"
         android:icon="@drawable/baseline_play_arrow_white_48dp"
         android:title="@string/play"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
     <!--        android:onClick="startChronometer"-->
 
 
@@ -30,15 +29,13 @@
         android:id="@+id/pause_action"
         android:icon="@drawable/baseline_pause_white_48dp"
         android:title="@string/pause"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always" />
 
     <!--    stop icon -->
     <item
         android:id="@+id/stop_action"
         android:icon="@drawable/baseline_stop_white_48dp"
         android:title="@string/stop"
-        app:showAsAction="always"
-        />
+        app:showAsAction="always" />
 
 </menu>

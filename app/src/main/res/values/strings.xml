@@ -10,5 +10,6 @@
     <string name="assist">ASSIST</string>
     <string name="goal">GOAL</string>
     <string name="yellow_card">YELLOW CARD</string>
-    <string name="red_ncard">RED  CARD</string>
+    <string name="red_ncard">RED CARD</string>
+    <string name="title_activity_summary_soccer_stats">Summary</string>
 </resources>

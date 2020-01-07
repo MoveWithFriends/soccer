@@ -1,6 +1,5 @@
 package com.example.statyoursoccerteam.View;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,22 +7,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Adapter;
 import android.widget.Toast;
-
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.statyoursoccerteam.Data.Player;
 import com.example.statyoursoccerteam.Data.PlayerList;
 import com.example.statyoursoccerteam.Data.RetrofitInstance;
 import com.example.statyoursoccerteam.Data.SoccerStatsApi;
 import com.example.statyoursoccerteam.R;
-
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,44 +34,45 @@ public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.statyoursoccerteam.View.StartActivity";
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
     }
 
-    private void initViews(){
+    private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         loadJSON();
     }
-private void loadJSON() {
-    playerArrayList = new ArrayList<>();
-    Retrofit retrofit = new Retrofit.Builder().baseUrl("https://jsonplaceholder.typicode.com/").addConverterFactory(GsonConverterFactory.create()).build();
+
+    private void loadJSON() {
+        playerArrayList = new ArrayList<>();
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://jsonplaceholder.typicode.com/").addConverterFactory(GsonConverterFactory.create()).build();
 //    SoccerStatsApi service = RetrofitInstance.getRetrofitInstance().create(SoccerStatsApi.class);
 
 //    Call<PlayerList> call = service.getPosts();
 
 //    Log.wtf("URL Called", call.request().url() + "");
-    SoccerStatsApi soccerStatsApi = retrofit.create(SoccerStatsApi.class);
-    Call<List<Player>> call = soccerStatsApi.getPosts();
-    Log.d(TAG, "loadJSON: so far so good?" + call.toString());
-    call.enqueue(new Callback<List<Player>>() {
-        @Override
-        public void onResponse(Call<List<Player>> call, Response<List<Player>> response) {
-            playerArrayList = response.body();
-            adapter = new MyViewAdapter(getApplicationContext(), playerArrayList);
-            recyclerView.setAdapter(adapter);
-        }
+        SoccerStatsApi soccerStatsApi = retrofit.create(SoccerStatsApi.class);
+        Call<List<Player>> call = soccerStatsApi.getPosts();
+        Log.d(TAG, "loadJSON: so far so good?" + call.toString());
+        call.enqueue(new Callback<List<Player>>() {
+            @Override
+            public void onResponse(Call<List<Player>> call, Response<List<Player>> response) {
+                playerArrayList = response.body();
+                adapter = new MyViewAdapter(getApplicationContext(), playerArrayList);
+                recyclerView.setAdapter(adapter);
+            }
 
-        @Override
-        public void onFailure(Call<List<Player>> call, Throwable t) {
-            Toast.makeText(getApplicationContext(), "Uhoh, something went wrong ...", Toast.LENGTH_LONG).show();
-        }
-    });
-}
+            @Override
+            public void onFailure(Call<List<Player>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Uhoh, something went wrong ...", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,13 +87,12 @@ private void loadJSON() {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.start_game:
-                // User chose the "Settings" item, show the app settings UI...
+                // User chose the "Start" item, starting the start activity..
                 Toast.makeText(this, "You pressed game start", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, StartActivity.class);
                 startActivity(intent);
                 return true;
-
 
 
             default:
