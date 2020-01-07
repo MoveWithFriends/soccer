@@ -1,16 +1,14 @@
 package com.example.statyoursoccerteam.View;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.ClipData;
 import android.content.ClipDescription;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Menu;
@@ -22,14 +20,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.example.statyoursoccerteam.Chrono;
 import com.example.statyoursoccerteam.R;
 import com.example.statyoursoccerteam.Scores;
 
-import static com.example.statyoursoccerteam.R.id.chronometer_view;
-import static com.example.statyoursoccerteam.R.id.red_card;
+
+import static androidx.recyclerview.widget.RecyclerView.*;
+import static com.example.statyoursoccerteam.R.id.action_context_bar;
+import static com.example.statyoursoccerteam.R.id.action_menu_presenter;
+import static com.example.statyoursoccerteam.R.id.expanded_menu;
+import static com.example.statyoursoccerteam.R.id.parent;
+import static com.example.statyoursoccerteam.R.id.pause_action;
+import static com.example.statyoursoccerteam.R.id.play_action;
+import static com.example.statyoursoccerteam.R.id.start;
+import static com.example.statyoursoccerteam.R.layout.chrono;
 
 
 public class StartActivity extends AppCompatActivity implements View.OnLongClickListener, View.OnDragListener {
@@ -61,10 +65,12 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     private static final String GOALS_AGAINST_TAG = "Goals against";
     private static final String YELLOW_CARD_LAYOUT_TAG = "Yellow card";
     private static final String RED_CARD_LAYOUT_TAG = "Red card";
-     private boolean running;
-    private Chronometer chronometer;
-     long pauseOffset;
-    Chrono chrono;
+
+    public static long starttimer = 0;
+   public Chrono chrono = Chrono.getInstance(this);
+   public static boolean running ;
+    static Chronometer chronometer;
+
 
 
 
@@ -72,23 +78,54 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
 
-        chronometer = (Chronometer) findViewById(chronometer_view);
-        chronometer.setFormat("Time\n%s");
-        chronometer.setBase(SystemClock.elapsedRealtime());
+        super.onCreate(savedInstanceState);
+//        if (savedInstanceState != null) {
+//            long message = savedInstanceState.getLong("elapsedTime");
+//            Toast.makeText(this, "Time " + message, Toast.LENGTH_LONG).show();
+//            starttimer = savedInstanceState.getLong("elapsedTime");
+//            running = savedInstanceState.getBoolean("isRunning");
+//            Log.d(TAG, "onCreate: running" + running );
+//            Log.d(TAG, "onCreate: chronometer " + chronometer);
+//            if(!running){
+//                Log.d(TAG, "onCreate: " +starttimer);
+//                Log.d(TAG, "onCreate: chronometer "+chronometer);
+//                if(chronometer!=null){
+//                    Log.d(TAG, "onCreate: chronometer" + chronometer);
+//                    chrono.startChronometer(chronometer);
+//                } else {
+//                    Log.d(TAG, "onCreate: chronometer is blijkbaar 0");
+//
+//                }
+//            } else{
+//                Log.d(TAG, "onCreate: was running");
+//                if(chronometer!=null){
+//                    Log.d(TAG, "onCreate: chronometer " + chronometer);
+//                    Log.d(TAG, "onCreate: chrono " + chrono);
+//                    chrono.startChronometer(chronometer);
+//                } else {
+//                    Log.d(TAG, "onCreate: chronometer is blijkbaar 0");
+//
+//                }
+//
+//            }
+//            }
+
+        setContentView(R.layout.activity_start);
+        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         findViews();
         implementEvents();
         Log.d(TAG, "onCreate: implemented events");
 
-        LinearLayout scorefield = (LinearLayout )findViewById(R.id.score_oponent);
-        scorefield.setOnLongClickListener(new View.OnLongClickListener() {
+        LinearLayout scorefield = (LinearLayout) findViewById(R.id.score_oponent);
+        scorefield.setOnLongClickListener(new OnLongClickListener() {
             TextView score = (TextView) findViewById(R.id.score_against);
             Scores scores = new Scores();
+
             @Override
             public boolean onLongClick(View v) {
-                Log.d(TAG, "onClick: Pressed field");
                 score.setText(scores.scoreAgainst());
                 return false;
             }
@@ -97,98 +134,94 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
 
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.start, menu);
+    }
 
-        return true;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: ");
+
+    }
+
+//    @Override
+//    public void onSaveInstanceState(@NonNull Bundle outState) {
+//        long elapsedtime = chrono.showElapsedTime(chronometer);
+//        Log.d(TAG, "onSaveInstanceState: elapsed time " + elapsedtime);
+//        outState.putLong("elapsedTime", elapsedtime);
+//        outState.putBoolean("isRunning", chrono.running);
+//
+//        super.onSaveInstanceState(outState);
+//
+//    }
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
     }
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-         chrono = new Chrono( this);
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: is being called");
 
-        switch (item.getItemId()) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "onDestroy: being called");
+        super.onDestroy();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.start, menu);
+        return true;
+
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        chronometer = (Chronometer) findViewById(R.id.chronometer_view3);
+//
+//        if(running && starttimer!=0){
+//            chrono.startChronometer(chronometer);
+//        }
+        switch (menuItem.getItemId()) {
+
             case R.id.play_action:
-                    // User chose the "Settings" item, show the app settings UI...
-                    Toast.makeText(this, "You pressed start", Toast.LENGTH_SHORT).show();
-                    startChronometer();
+                Toast.makeText(this, "You pressed start", Toast.LENGTH_SHORT).show();
+                chrono.startChronometer(chronometer);
                 return true;
 
             case R.id.pause_action:
-                    // User chose the "Favorite" action, mark the current item
-                    // as a favorite...
-                    pauseChronometer();
+                chrono.pauseChronometer(chronometer);
+                Toast.makeText(this, "Elapsed time is " + (chrono.showElapsedTime(chronometer)) + " seconds", Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.stop_action:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                Toast.makeText(this, "You pressed stop", Toast.LENGTH_SHORT).show();
-                    stopChronometer();
+                chrono.showWarningMessage(chronometer);
+//                    chrono.stopChronometer(chronometer);
+                Toast.makeText(this, "Elapsed time is " + (chrono.showElapsedTime(chronometer)) + " seconds", Toast.LENGTH_SHORT).show();
                 return true;
 
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(menuItem);
         }
-    }
-
-    //TODO Chrono methoden moeten eigenlijk niet in deze activity staan. Er moeten eigenlijk methoden in de class chrono worden afgedraaid en het resulataat hier zichtbaar maar dat is me ngo niet gelukt.
-   //Misschien moet het een ASyncTask worden??
-
-    public void startChronometer(){
-        if(!running){
-            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-            chronometer.start();
-            running  = true;
-        }
-    }
-
-
-    public void pauseChronometer(){
-        if(running){
-            showElapsedTime();
-            chronometer.stop();
-            pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-            running = false;
-        } else {
-//           startChronometer();
-        }
-    }
-
-    public void stopChronometer(){
-        if(running) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.app_name);
-            builder.setMessage("Do you want to stop ?");
-            builder.setIcon(R.drawable.ic_warning_black_24dp);
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                    chronometer.stop();
-                    pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
-                    running = false;
-                }
-            });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            });
-            AlertDialog alert = builder.create();
-            alert.show();
-        }
-    }
-
-    public void showElapsedTime() {
-        long elapsedMillis = SystemClock.elapsedRealtime()
-                - chronometer.getBase();
-        Toast.makeText(this,
-                "Elapsed milliseconds: " + elapsedMillis, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -233,7 +266,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         goals_against.setTag(GOALS_AGAINST_TAG);
         yellowcard = (LinearLayout) findViewById(R.id.yellow_card);
         yellowcard.setTag(YELLOW_CARD_LAYOUT_TAG);
-        redcard = (LinearLayout) findViewById(red_card);
+        redcard = (LinearLayout) findViewById(R.id.red_card);
         redcard.setTag(RED_CARD_LAYOUT_TAG);
 
         //add or remove any layout view that you don't want to accept dragged view
@@ -349,52 +382,41 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
                 Log.d(TAG, "onDrag: container" + container.toString());
 
 
-                    if (container.getTag() != null) {
-                        switch (container.getTag().toString()) {
-                            case RED_CARD_LAYOUT_TAG:
-                                Toast.makeText(this, "" + dragData + " heeft rode kaart gekregen", Toast.LENGTH_SHORT).show();
-                                break;
-                            case YELLOW_CARD_LAYOUT_TAG:
-                                Toast.makeText(this, "" + dragData + " heeft gele kaart gekregen", Toast.LENGTH_SHORT).show();
-                                break;
-                            case GOALS_LAYOUT_TAG:
-                                Toast.makeText(this, "" + dragData + " made a goal", Toast.LENGTH_SHORT).show();
-                                score.setText(scores_pro.scorePro());
-                                break;
-                            case ASSISTS_LAYOUT_TAG:
-                                Toast.makeText(this, "" + dragData + " made an assist", Toast.LENGTH_SHORT).show();
-                                break;
-                            default:
-                                Toast.makeText(this, "Nothing to show", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                    } else if ((container.getTag() == null || (container.getTag() == SUBSTITUTE_LAYOUT_TAG))) {
-                            if (container.getChildAt(0) != null) {
-                                View target = container.getChildAt(0);
+                if (container.getTag() != null) {
+                    switch (container.getTag().toString()) {
+                        case RED_CARD_LAYOUT_TAG:
+                            Toast.makeText(this, "" + dragData + " heeft rode kaart gekregen", Toast.LENGTH_SHORT).show();
+                            break;
+                        case YELLOW_CARD_LAYOUT_TAG:
+                            Toast.makeText(this, "" + dragData + " heeft gele kaart gekregen", Toast.LENGTH_SHORT).show();
+                            break;
+                        case GOALS_LAYOUT_TAG:
+                            Toast.makeText(this, "" + dragData + " made a goal", Toast.LENGTH_SHORT).show();
+                            score.setText(scores_pro.scorePro());
+                            break;
+                        case ASSISTS_LAYOUT_TAG:
+                            Toast.makeText(this, "" + dragData + " made an assist", Toast.LENGTH_SHORT).show();
+                            break;
+                        case SUBSTITUTE_LAYOUT_TAG:
+                            swapPlayers(dragged, vr, container);
+                            Toast.makeText(this, "" + dragData + " wordt gewisseld", Toast.LENGTH_SHORT).show();
+                            break;
+                        default:
+                            Toast.makeText(this, "Nothing to show", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                } else {
+                    swapPlayers(dragged, vr, container);
+                }
 
-                                LinearLayout oldOwner = (LinearLayout) dragged.getParent();
-                                if (oldOwner != container) {
-                                    oldOwner.removeView(dragged);
-                                    container.removeView(target);
-                                    container.addView(dragged);
-                                    oldOwner.addView(target);
-                                }
-                            }
-                            //remove the dragged view
-                            ViewGroup oldOwners = (ViewGroup) vr.getParent();
-                            oldOwners.removeView(vr);
-                            container.addView(vr);//Add the dragged view
-                            vr.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
-                        }
+                vr.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
+                //If u had not provided any color in ACTION_DRAG_STARTED then clear color filter.
+                view.getBackground().clearColorFilter();
+                // Invalidate the view to force a redraw in the new tint
+                view.invalidate();
 
-                    vr.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
-                    //If u had not provided any color in ACTION_DRAG_STARTED then clear color filter.
-                    view.getBackground().clearColorFilter();
-                    // Invalidate the view to force a redraw in the new tint
-                    view.invalidate();
-
-                    // Returns true. DragEvent.getResult() will return true.
-                    return true;
+                // Returns true. DragEvent.getResult() will return true.
+                return true;
 
 
             case DragEvent.ACTION_DRAG_ENDED:
@@ -410,5 +432,26 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         return false;
     }
 
+    private void swapPlayers(View dragged, View vr, LinearLayout container) {
+        if (container.getChildAt(0) != null) {
+            View target = container.getChildAt(0);
+
+            LinearLayout oldOwner = (LinearLayout) dragged.getParent();
+            if (oldOwner != container) {
+                oldOwner.removeView(dragged);
+                container.removeView(target);
+                container.addView(dragged);
+                oldOwner.addView(target);
+            }
+        }
+        //remove the dragged view
+        ViewGroup oldOwners = (ViewGroup) vr.getParent();
+        oldOwners.removeView(vr);
+        container.addView(vr);//Add the dragged view
+        vr.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
+    }
+
+    @Override
+    public void onBackPressed() { }
 
 }

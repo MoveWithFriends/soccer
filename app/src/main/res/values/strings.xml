@@ -6,5 +6,14 @@
     <string name="play">Play</string>
     <string name="pause">Pause</string>
     <string name="stop">Stop</string>
+<<<<<<< HEAD
     <string name="select_your_team">Select your team</string>
+=======
+    <string name="start_game">Start game</string>
+    <string name="assist">ASSIST</string>
+    <string name="goal">GOAL</string>
+    <string name="yellow_card">YELLOW CARD</string>
+    <string name="red_ncard">RED CARD</string>
+    <string name="title_activity_summary_soccer_stats">Summary</string>
+>>>>>>> 2d11c611769f59ad01c0990749d20807d16e9326
 </resources>

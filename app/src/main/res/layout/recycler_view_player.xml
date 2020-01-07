@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/person_details_list_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    >
+
+
+    <ImageView
+        android:id="@+id/list_item_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:foregroundGravity="left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
+
+
+    <TextView
+        android:id="@+id/list_item_userId"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="521dp"
+        android:layout_height="31dp"
+        android:gravity="start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toEndOf="@+id/list_item_image"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="-1dp"
+        />
+
+    <TextView
+        android:id="@+id/list_item_Id"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="522dp"
+        android:layout_height="18dp"
+        android:layout_row="0"
+        android:layout_column="2"
+        android:gravity="start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintStart_toEndOf="@id/list_item_image"
+        app:layout_constraintTop_toBottomOf="@id/list_item_userId"
+        />
+
+    <TextView
+        android:id="@+id/list_item_Title"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="522dp"
+        android:layout_height="18dp"
+        android:layout_row="0"
+        android:layout_column="2"
+        android:gravity="start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintStart_toEndOf="@id/list_item_image"
+
+        />
+
+    <TextView
+        android:id="@+id/list_item_Text"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="522dp"
+        android:layout_height="18dp"
+        android:layout_row="0"
+        android:layout_column="2"
+        android:gravity="start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintStart_toEndOf="@+id/list_item_image"
+        app:layout_constraintTop_toBottomOf="@+id/list_item_Title"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".View.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".View.MainActivity">
 
 
     <Chronometer
-            android:id="@+id/counter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            />
+        android:id="@+id/counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp" />
 
 
     <!--    Start game text icon -->
     <item
         android:id="@+id/start_game"
-
-        android:title="Start game"
-        app:showAsAction="always"
-        />
-
+        android:icon="@drawable/icons8_whistle_100"
+        android:title="@string/start_game"
+        app:showAsAction="always" />
 
 
 </menu>

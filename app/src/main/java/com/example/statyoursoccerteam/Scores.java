@@ -8,14 +8,14 @@ public class Scores {
     private int scorePro = 0;
 
 
-    public String scoreAgainst(){
-            scoreAgainst ++;
-            String goals = String.valueOf(scoreAgainst);
-            return goals;
+    public String scoreAgainst() {
+        scoreAgainst++;
+        String goals = String.valueOf(scoreAgainst);
+        return goals;
     }
 
-    public String scorePro(){
-        scorePro ++;
+    public String scorePro() {
+        scorePro++;
         String goal = String.valueOf(scorePro);
         return goal;
     }

@@ -1,573 +1,589 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:background="@drawable/soccer_pitch"
-tools:context=".View.StartActivity">
-
-
-<LinearLayout
-    android:id="@+id/rowA_Layout"
-    android:layout_width="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:gravity="center"
-    android:orientation="horizontal"
+    android:background="@drawable/pitch_soccer"
+    android:orientation="vertical"
+    tools:context=".View.StartActivity"
+
     >
 
+    <include layout="@layout/chrono" />
+
     <LinearLayout
-        android:id="@+id/assist_a"
-        android:layout_width="match_parent"
+        android:id="@+id/rowA_Layout"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@drawable/customborder"
         android:gravity="center"
-        android:orientation="vertical"
-        android:soundEffectsEnabled="false"
-        android:splitMotionEvents="false"
+        android:orientation="horizontal"
         >
 
-        <TextView
-            android:id="@+id/textView"
+        <LinearLayout
+            android:id="@+id/assist_a"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ASSIST"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
             android:gravity="center"
-            android:textSize="36sp"
-            />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:soundEffectsEnabled="false"
+            android:splitMotionEvents="false"
+            >
 
-    <LinearLayout
-        android:id="@+id/a_1_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="ASSIST"
+                android:textSize="15sp"
+                />
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/a_2_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-        <ImageView
-            android:id="@+id/stijn_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/stijnicon"
-            app:srcCompat="@mipmap/ic_launcher"
-
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/a_3_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-        <ImageView
-            android:id="@+id/nick_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/nickicon"
-            app:srcCompat="@mipmap/ic_launcher"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/a_4__layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-        <ImageView
-            android:id="@+id/joost_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/joosticon"
-            app:srcCompat="@mipmap/ic_launcher"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/a_5_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-        <ImageView
-            android:id="@+id/jurgen_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/jurgenicon"
-            app:srcCompat="@mipmap/ic_launcher"
-            />
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/goal_a"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-        <TextView
-            android:id="@+id/textView2"
+        <LinearLayout
+            android:id="@+id/a_1_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="GOAL"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
             android:gravity="center"
-            android:textSize="36sp"
-            />
-    </LinearLayout>
+            android:orientation="vertical"
+            >
 
+        </LinearLayout>
 
-</LinearLayout>
-
-<LinearLayout
-    android:id="@+id/rowB_Layout"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:gravity="center"
-    android:orientation="horizontal"
-    >
-
-    <LinearLayout
-        android:id="@+id/yellow_card"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@color/yellow"
-        >
-
-        <TextView
-            android:id="@+id/textView_yellow_card"
+        <LinearLayout
+            android:id="@+id/a_2_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="YELLOW CARD"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:singleLine="false"
-            android:textSize="36sp"
-            />
+            android:orientation="vertical"
+            >
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/stijn_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/stijnicon"
+                app:srcCompat="@mipmap/ic_launcher"
 
-    <LinearLayout
-        android:id="@+id/b_1_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
+                />
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/b_2_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        />
-
-    <LinearLayout
-        android:id="@+id/b_3_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/b_4__layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/b_5_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/red_card"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@color/red"
-        >
-        <TextView
-            android:id="@+id/textView_red_card"
+        <LinearLayout
+            android:id="@+id/a_3_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="RED \nCARD"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
             android:gravity="center"
-            android:textColor="@color/black"
-            android:singleLine="false"
-            android:textSize="36sp"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/nick_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/nickicon"
+                app:srcCompat="@mipmap/ic_launcher"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/a_4__layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/joost_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/joosticon"
+                app:srcCompat="@mipmap/ic_launcher"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/a_5_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/jurgen_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/jurgenicon"
+                app:srcCompat="@mipmap/ic_launcher"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/goal_a"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="GOAL"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rowB_Layout"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:id="@+id/yellow_card"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/yellow"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/textView_yellow_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:singleLine="false"
+                android:text="YELLOW CARD"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/b_1_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/b_2_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
             />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/b_3_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
 
+        </LinearLayout>
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/b_4__layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
 
-<LinearLayout
-    android:id="@+id/rowC_Layout"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:gravity="center"
-    android:orientation="horizontal"
-    >
-    <LinearLayout
-        android:id="@+id/assist_c"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
+        </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/b_5_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
 
-    <LinearLayout
-        android:id="@+id/c_1_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
+        </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/red_card"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/red"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
 
-    <LinearLayout
-        android:id="@+id/c_2_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        />
+            <TextView
+                android:id="@+id/textView_red_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:singleLine="false"
+                android:text="RED \nCARD"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                />
 
-    <LinearLayout
-        android:id="@+id/c_3_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
+        </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/c_4__layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/c_5_layout"
-        android:layout_width="match_parent"
+        android:id="@+id/rowC_Layout"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
+        android:orientation="horizontal"
         >
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/assist_c"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
 
-    <LinearLayout
-        android:id="@+id/goal_c"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
+        </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/c_1_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
 
+        </LinearLayout>
 
-</LinearLayout>
-
-<LinearLayout
-    android:id="@+id/rowD_Layout"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:gravity="center"
-    android:orientation="horizontal"
-    >
-
-    <LinearLayout
-        android:id="@+id/score_we"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-        <TextView
-            android:id="@+id/score_in_advance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="32sp"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/d_1_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/d_2_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        />
-
-    <LinearLayout
-        android:id="@+id/d_3_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/d_4__layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/d_5_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/score_oponent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:clickable="true"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:focusable="true"
-        android:background="?android:attr/selectableItemBackground"
-        >
-
-        <TextView
-            android:id="@+id/score_against"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center|center_horizontal"
-            android:text="0"
-            android:textSize="32sp"
-            />
-    </LinearLayout>
-
-
-
-</LinearLayout>
-
-<LinearLayout
-    android:id="@+id/rowE_Layout"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:gravity="center"
-    android:orientation="horizontal"
-    >
-
-    <LinearLayout
-        android:id="@+id/timer_field"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-        <Chronometer
-            android:id="@+id/chronometer_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
+        <LinearLayout
+            android:id="@+id/c_2_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
             />
 
+        <LinearLayout
+            android:id="@+id/c_3_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/c_4__layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/c_5_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/goal_c"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
+
     </LinearLayout>
+
     <LinearLayout
-        android:id="@+id/substitute_1"
-        android:layout_width="match_parent"
+        android:id="@+id/rowD_Layout"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
+        android:orientation="horizontal"
         >
 
+        <LinearLayout
+            android:id="@+id/score_we"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/score_in_advance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="32sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/d_1_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/d_2_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            />
+
+        <LinearLayout
+            android:id="@+id/d_3_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/d_4__layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/d_5_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/score_oponent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/score_against"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|center_horizontal"
+                android:text="0"
+                android:textSize="32sp"
+                />
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/substitute_2"
-        android:layout_width="match_parent"
+        android:id="@+id/rowE_Layout"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        />
-
-    <LinearLayout
-        android:id="@+id/substitute_3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
+        android:orientation="horizontal"
         >
 
+        <LinearLayout
+            android:id="@+id/timer_field"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/timer_field2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|center_horizontal"
+                android:text="0"
+                android:textSize="32sp">
+                    <Chronometer
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                        android:id="@+id/chronometerinfield"/>
+            </TextView>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/substitute_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/substitute_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            />
+
+        <LinearLayout
+            android:id="@+id/substitute_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/substitute_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/substitute_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/start_stop_field"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/customborder"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+        </LinearLayout>
+
+
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/substitute_4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/substitute_5"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/start_stop_field"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:background="@drawable/customborder"
-        >
-
-    </LinearLayout>
-
-
-
-</LinearLayout>
 
 
 </LinearLayout>

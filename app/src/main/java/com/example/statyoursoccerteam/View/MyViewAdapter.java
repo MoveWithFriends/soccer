@@ -1,19 +1,23 @@
 package com.example.statyoursoccerteam.View;
 
-        import android.content.Context;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.TextView;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
-        import androidx.annotation.NonNull;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-        import com.example.statyoursoccerteam.Data.Player;
-        import com.example.statyoursoccerteam.R;
+import com.example.statyoursoccerteam.Data.Player;
+import com.example.statyoursoccerteam.R;
 
+<<<<<<< HEAD
         import java.util.ArrayList;
         import java.util.List;
+=======
+import java.util.List;
+>>>>>>> 2d11c611769f59ad01c0990749d20807d16e9326
 
 public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonViewHolder> {
 
@@ -29,7 +33,11 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
     @NonNull
     @Override
     public PersonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+<<<<<<< HEAD
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent,false);
+=======
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_player, parent, false);
+>>>>>>> 2d11c611769f59ad01c0990749d20807d16e9326
         return new PersonViewHolder(view);
     }
 
@@ -46,7 +54,12 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
     }
 
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
+<<<<<<< HEAD
         public TextView firstName, shirtNumber, lastName;
+=======
+        public TextView UserIdTv, IdTv, TitleTv, TextTv;
+
+>>>>>>> 2d11c611769f59ad01c0990749d20807d16e9326
         public PersonViewHolder(View itemView) {
             super(itemView);
 
