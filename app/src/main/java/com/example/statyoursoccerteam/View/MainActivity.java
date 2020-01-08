@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -23,13 +22,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.statyoursoccerteam.Data.Player;
-import com.example.statyoursoccerteam.Data.SoccerStatsApi;
+import com.example.statyoursoccerteam.Data.ISoccerStatsApi;
 import com.example.statyoursoccerteam.Data.Teams;
 import com.example.statyoursoccerteam.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +41,9 @@ import static android.R.layout.simple_spinner_item;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String URLstring = SoccerStatsApi.jsonUrl;
+    public static final int NEW_CONTACT_ACTIVITY_REQUEST_CODE = 1;
+
+    private String URLstring = ISoccerStatsApi.jsonUrl;
     private static ProgressDialog mProgressDialog;
     private ArrayList<Teams> teamArrayList;
     private ArrayList<Player> playerArrayList;
@@ -62,8 +63,16 @@ public class MainActivity extends AppCompatActivity {
         spinner = findViewById(R.id.spTeams);
         pList = findViewById(R.id.rv);
 
-
         retrieveTeamJson("teams");
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddPlayerActivity.class);
+                startActivityForResult(intent, NEW_CONTACT_ACTIVITY_REQUEST_CODE);
+            }
+        });
 
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -145,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
     private void retrievePlayers(String url) {
 
         showSimpleProgressDialog(this, "Loading...", "Fetching Json", false);
-//
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLstring + url,
                 new Response.Listener<String>() {
                     @Override

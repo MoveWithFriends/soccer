@@ -52,8 +52,6 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
 
         public TextView firstName, shirtNumber, lastName;
 
-        public TextView UserIdTv, IdTv, TitleTv, TextTv;
-
 
         public PersonViewHolder(View itemView) {
             super(itemView);

@@ -52,6 +52,15 @@
                 <action android:name="android.intent.action.START" />
             </intent-filter>
         </activity>
+        <activity android:name=".View.AddPlayerActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".View.MainActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.START" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
