@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,8 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
         holder.firstName.setText(playerList.get(position).getFirstName());
         holder.shirtNumber.setText(playerList.get(position).getShirtNumber());
         holder.lastName.setText(playerList.get(position).getLastName());
+
+        holder.image.setImageBitmap(playerList.get(position).getImage());
     }
 
     @Override
@@ -51,11 +54,13 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
 
         public TextView firstName, shirtNumber, lastName;
+        public ImageView image;
 
 
         public PersonViewHolder(View itemView) {
             super(itemView);
 
+            image = itemView.findViewById(R.id.list_image);
             firstName = itemView.findViewById(R.id.playerFirstName);
             lastName = itemView.findViewById(R.id.playerLastName);
             shirtNumber = itemView.findViewById(R.id.shirtNumber);

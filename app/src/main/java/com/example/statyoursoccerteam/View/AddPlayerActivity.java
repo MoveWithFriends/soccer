@@ -2,6 +2,10 @@ package com.example.statyoursoccerteam.View;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -23,6 +27,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -43,6 +49,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import static android.R.layout.simple_spinner_item;
+import static com.example.statyoursoccerteam.View.MainActivity.showSimpleProgressDialog;
 
 public class AddPlayerActivity extends AppCompatActivity {
 
@@ -122,10 +129,11 @@ public class AddPlayerActivity extends AppCompatActivity {
 
         requestQueue.add(postRequest);
     }
+
     private void retrieveTeamJson(String url) {
 
-        MainActivity.showSimpleProgressDialog(this, "Loading...", "Fetching Json", false);
-//
+        showSimpleProgressDialog(this, "Loading...", "Fetching Json", false);
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLstring + url,
                 new Response.Listener<String>() {
                     @Override
