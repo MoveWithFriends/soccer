@@ -16,17 +16,12 @@ public class Chrono {
     private static final String TAG = "Chrono";
     private Context context;
     public boolean running = false;
-    public int elapsedtime = 0;
     public long pauseOffset = 0;
     private long elapsedSecs;
 
     //Implement Chrono as a Singleton
     public static Chrono instance = null;
-    private Chronometer chronometer;
 
-//    public Chrono(Context context) {
-//        super(context);
-//    }
 
     private Chrono(Context context) {
         this.context = context;
@@ -68,9 +63,8 @@ public class Chrono {
             running = true;
 
         } else {
-//            chronometer.setBase(SystemClock.elapsedRealtime() - (StartActivity.starttimer * 1000));
+
             chronometer.start();
-//            running = false;
 
         }
 
@@ -78,7 +72,7 @@ public class Chrono {
 
 
     public void pauseChronometer(Chronometer chronometer) {
-//        showElapsedTime(chronometer);
+
         if (running) {
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
@@ -102,24 +96,24 @@ public class Chrono {
     public void showWarningMessage(Chronometer chronometer) {
         Log.d(TAG, "showWarningMessage: " + running);
         if (running) {
-            AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
-            builder2.setTitle(R.string.app_name);
-            builder2.setMessage("Do you want to stop ?");
-            builder2.setIcon(R.drawable.ic_warning_black_24dp);
-            builder2.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle(R.string.app_name);
+            builder.setMessage("Do you want to stop ?");
+            builder.setIcon(R.drawable.ic_warning_black_24dp);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
                     Chrono.getInstance().stopChronometer(chronometer);
                     StartActivity.getInstance().startSummaryActivity();
                 }
             });
-            builder2.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
                 }
 
             });
-            AlertDialog alert = builder2.create();
+            AlertDialog alert = builder.create();
             alert.show();
         }
 
@@ -127,7 +121,6 @@ public class Chrono {
 
 
     public long showElapsedTime(Chronometer chronometer) {
-//        Log.d(TAG, "showElapsedTime: " + chronometer);
         if (chronometer != null) {
             if (running) {
                 elapsedSecs = (long) (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;

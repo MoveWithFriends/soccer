@@ -74,13 +74,13 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
     public static long starttimer = 0;
     public Chrono chrono = Chrono.getInstance(this);
-    Chronometer chronometer = null;
+    Chronometer chronometer;
     private static StartActivity instanceStartActivity;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+    chronometer = null;
 
         super.onCreate(savedInstanceState);
 
@@ -180,7 +180,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
             case R.id.stop_action:
                 chrono.showWarningMessage(chronometer);
-//                    chrono.stopChronometer(chronometer);
+                    chrono.stopChronometer(chronometer);
                 Toast.makeText(this, "Elapsed time is " + (chrono.showElapsedTime(chronometer)) + " seconds", Toast.LENGTH_SHORT).show();
                 return true;
 

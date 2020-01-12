@@ -7,6 +7,10 @@ public class Scores {
     private int scoreAgainst = 0;
     private int scorePro = 0;
 
+    /**
+     * scores of
+     * @return
+     */
 
     public String scoreAgainst() {
         scoreAgainst++;
