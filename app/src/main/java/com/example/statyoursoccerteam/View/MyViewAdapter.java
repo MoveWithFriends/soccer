@@ -1,6 +1,7 @@
 package com.example.statyoursoccerteam.View;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.statyoursoccerteam.Data.Player;
 import com.example.statyoursoccerteam.R;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.List;
 
 
 public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonViewHolder> {
+
+    private static final String TAG = "MyViewAdapter";
 
     private Context context;
     private List<Player> playerList = new ArrayList<>();
@@ -32,7 +36,7 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
     @Override
     public PersonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
 
         return new PersonViewHolder(view);
     }
@@ -42,6 +46,7 @@ public class MyViewAdapter extends RecyclerView.Adapter<MyViewAdapter.PersonView
         holder.firstName.setText(playerList.get(position).getFirstName());
         holder.shirtNumber.setText(playerList.get(position).getShirtNumber());
         holder.lastName.setText(playerList.get(position).getLastName());
+        Log.d(TAG, "onBindViewHolder: " + holder.firstName.toString());
 
         holder.image.setImageBitmap(playerList.get(position).getImage());
     }

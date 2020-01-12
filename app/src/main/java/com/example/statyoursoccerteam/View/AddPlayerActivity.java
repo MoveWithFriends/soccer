@@ -113,16 +113,16 @@ public class AddPlayerActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
             }
-            }
-        ){
+        }
+        ) {
             @Override
-            protected Map<String, String> getParams(){
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("firstName", editFirst.getText().toString());
-                    params.put("lastName", editLast.getText().toString());
-                    params.put("backNumber", editShirtNumber.getText().toString());
-                    params.put("teamId", String.valueOf(teamId));
-                    return params;
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("firstName", editFirst.getText().toString());
+                params.put("lastName", editLast.getText().toString());
+                params.put("backNumber", editShirtNumber.getText().toString());
+                params.put("teamId", String.valueOf(teamId));
+                return params;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);

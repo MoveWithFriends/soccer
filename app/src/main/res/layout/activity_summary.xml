@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        >
+
+        <fragment
+            android:id="@+id/fragment"
+            android:name="com.example.statyoursoccerteam.View.MatcheventsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            tools:layout="@layout/fragment_summary_matchevents">
+
+        </fragment>
+
+        <fragment
+            android:id="@+id/map_fragment"
+            android:name="com.example.statyoursoccerteam.View.LocationsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            tools:layout="@layout/fragment_summary_locations">
+
+        </fragment>
+
+
+
+</LinearLayout>
+

@@ -186,8 +186,7 @@ public class MainActivity extends AppCompatActivity {
                                 playerModel.setFirstName(dataobj.getString("firstName"));
                                 playerModel.setLastName(dataobj.getString("lastName"));
                                 playerModel.setShirtNumber(dataobj.getString("backNumber"));
-                                if(dataobj.getString("image") != null)
-                                {
+                                if (dataobj.getString("image") != null) {
                                     playerModel.setImage(BitMapToString(dataobj.getString("image")));
                                 }
 
@@ -223,10 +222,10 @@ public class MainActivity extends AppCompatActivity {
 
     private Bitmap BitMapToString(String image) {
         try {
-            byte [] encodeByte=Base64.decode(image,Base64.DEFAULT);
-            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            byte[] encodeByte = Base64.decode(image, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.getMessage();
             return null;
         }

@@ -2,9 +2,13 @@ package com.example.statyoursoccerteam.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
@@ -20,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.statyoursoccerteam.Chrono;
 import com.example.statyoursoccerteam.R;
 import com.example.statyoursoccerteam.Scores;
@@ -33,6 +38,7 @@ import static com.example.statyoursoccerteam.R.id.parent;
 import static com.example.statyoursoccerteam.R.id.pause_action;
 import static com.example.statyoursoccerteam.R.id.play_action;
 import static com.example.statyoursoccerteam.R.id.start;
+import static com.example.statyoursoccerteam.R.layout.activity_main;
 import static com.example.statyoursoccerteam.R.layout.chrono;
 
 
@@ -67,53 +73,20 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     private static final String RED_CARD_LAYOUT_TAG = "Red card";
 
     public static long starttimer = 0;
-   public Chrono chrono = Chrono.getInstance(this);
-   public static boolean running ;
+    public Chrono chrono = Chrono.getInstance(this);
+    public static boolean running;
     static Chronometer chronometer;
-
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
 
-
         super.onCreate(savedInstanceState);
-//        if (savedInstanceState != null) {
-//            long message = savedInstanceState.getLong("elapsedTime");
-//            Toast.makeText(this, "Time " + message, Toast.LENGTH_LONG).show();
-//            starttimer = savedInstanceState.getLong("elapsedTime");
-//            running = savedInstanceState.getBoolean("isRunning");
-//            Log.d(TAG, "onCreate: running" + running );
-//            Log.d(TAG, "onCreate: chronometer " + chronometer);
-//            if(!running){
-//                Log.d(TAG, "onCreate: " +starttimer);
-//                Log.d(TAG, "onCreate: chronometer "+chronometer);
-//                if(chronometer!=null){
-//                    Log.d(TAG, "onCreate: chronometer" + chronometer);
-//                    chrono.startChronometer(chronometer);
-//                } else {
-//                    Log.d(TAG, "onCreate: chronometer is blijkbaar 0");
-//
-//                }
-//            } else{
-//                Log.d(TAG, "onCreate: was running");
-//                if(chronometer!=null){
-//                    Log.d(TAG, "onCreate: chronometer " + chronometer);
-//                    Log.d(TAG, "onCreate: chrono " + chrono);
-//                    chrono.startChronometer(chronometer);
-//                } else {
-//                    Log.d(TAG, "onCreate: chronometer is blijkbaar 0");
-//
-//                }
-//
-//            }
-//            }
 
         setContentView(R.layout.activity_start);
         getSupportActionBar().setTitle(null);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         findViews();
         implementEvents();
@@ -146,18 +119,6 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         Log.d(TAG, "onResume: ");
 
     }
-
-//    @Override
-//    public void onSaveInstanceState(@NonNull Bundle outState) {
-//        long elapsedtime = chrono.showElapsedTime(chronometer);
-//        Log.d(TAG, "onSaveInstanceState: elapsed time " + elapsedtime);
-//        outState.putLong("elapsedTime", elapsedtime);
-//        outState.putBoolean("isRunning", chrono.running);
-//
-//        super.onSaveInstanceState(outState);
-//
-//    }
-
 
 
     @Override
@@ -452,6 +413,36 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     }
 
     @Override
-    public void onBackPressed() { }
+    public void onBackPressed() {
+        if(chrono.showElapsedTime(chronometer)!=0){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.app_name);
+            builder.setMessage("Do you want to go back and lose all changes ?");
+            builder.setIcon(R.drawable.ic_warning_black_24dp);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                    restartMainActivity();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+        else {
+            restartMainActivity();
+        }
+
+    }
+
+    public void restartMainActivity(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
 }

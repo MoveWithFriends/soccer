@@ -22,9 +22,13 @@ public class Player {
     private Bitmap image;
 
 
-    public Bitmap getImage() { return image; }
+    public Bitmap getImage() {
+        return image;
+    }
 
-    public void setImage(Bitmap image) { this.image = image; }
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
 
     public String getFirstName() {
         return firstName;
