@@ -49,6 +49,8 @@ public class SummaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: starts");
         setContentView(R.layout.activity_summary);
+        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         mTwoPane = (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) ||
                 (getResources().getDisplayMetrics().widthPixels > 1200);
@@ -79,7 +81,7 @@ public class SummaryActivity extends AppCompatActivity {
 
 
     @SuppressLint("MissingPermission")
-    private void getLastLocation(){
+    public void getLastLocation(){
         if (checkPermissions()) {
             if (isLocationEnabled()) {
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(

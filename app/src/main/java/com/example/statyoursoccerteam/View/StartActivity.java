@@ -74,8 +74,8 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
     public static long starttimer = 0;
     public Chrono chrono = Chrono.getInstance(this);
-    public static boolean running;
-    static Chronometer chronometer;
+    Chronometer chronometer = null;
+    private static StartActivity instanceStartActivity;
 
 
     @Override
@@ -86,7 +86,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
         setContentView(R.layout.activity_start);
         getSupportActionBar().setTitle(null);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         findViews();
         implementEvents();
@@ -103,6 +103,11 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
                 return false;
             }
         });
+        instanceStartActivity = this;
+    }
+
+    public static StartActivity getInstance(){
+        return instanceStartActivity;
     }
 
 
@@ -155,7 +160,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        chronometer = (Chronometer) findViewById(R.id.chronometer_view3);
+
 //
 //        if(running && starttimer!=0){
 //            chrono.startChronometer(chronometer);
@@ -163,6 +168,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         switch (menuItem.getItemId()) {
 
             case R.id.play_action:
+                chronometer = (Chronometer) findViewById(R.id.chronometer_view3);
                 Toast.makeText(this, "You pressed start", Toast.LENGTH_SHORT).show();
                 chrono.startChronometer(chronometer);
                 return true;
@@ -414,7 +420,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
     @Override
     public void onBackPressed() {
-        if(chrono.showElapsedTime(chronometer)!=0){
+        if (chronometer != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.app_name);
             builder.setMessage("Do you want to go back and lose all changes ?");
@@ -433,15 +439,24 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
             });
             AlertDialog alert = builder.create();
             alert.show();
-        }
-        else {
+        } else {
             restartMainActivity();
         }
 
     }
 
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        return super.onContextItemSelected(item);
+    }
+
     public void restartMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void startSummaryActivity(){
+        Intent intent = new Intent(this, SummaryActivity.class);
         startActivity(intent);
     }
 

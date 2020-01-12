@@ -2,6 +2,7 @@ package com.example.statyoursoccerteam;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Chronometer;
@@ -67,7 +68,7 @@ public class Chrono {
             running = true;
 
         } else {
-            chronometer.setBase(SystemClock.elapsedRealtime() - (StartActivity.starttimer * 1000));
+//            chronometer.setBase(SystemClock.elapsedRealtime() - (StartActivity.starttimer * 1000));
             chronometer.start();
 //            running = false;
 
@@ -89,40 +90,36 @@ public class Chrono {
 
     public void stopChronometer(final Chronometer chronometer) {
         if (running) {
-            //TODO make warning massage to confirm stopping the registration of game events
-            // if confirmed then show summary activity
-            // if confirmation is negative then time will continue
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             running = false;
         } else {
-
             pauseChronometer(chronometer);
         }
 
     }
 
-    public void showWarningMessage(final Chronometer chronometer) {
+    public void showWarningMessage(Chronometer chronometer) {
+        Log.d(TAG, "showWarningMessage: " + running);
         if (running) {
-            //TODO make context startactivity to show the message
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(R.string.app_name);
-            builder.setMessage("Do you want to stop ?");
-            builder.setIcon(R.drawable.ic_warning_black_24dp);
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            AlertDialog.Builder builder2 = new AlertDialog.Builder(context);
+            builder2.setTitle(R.string.app_name);
+            builder2.setMessage("Do you want to stop ?");
+            builder2.setIcon(R.drawable.ic_warning_black_24dp);
+            builder2.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
-                    //TODO start activity to make summary
-                    stopChronometer(chronometer);
+                    Chrono.getInstance().stopChronometer(chronometer);
+                    StartActivity.getInstance().startSummaryActivity();
                 }
             });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            builder2.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
                 }
 
             });
-            AlertDialog alert = builder.create();
+            AlertDialog alert = builder2.create();
             alert.show();
         }
 
