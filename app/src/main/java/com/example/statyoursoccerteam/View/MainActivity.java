@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         spinner = findViewById(R.id.spTeams);
         pList = findViewById(R.id.rv);
 
-
         retrieveTeamJson("teams");
 
 
