@@ -80,14 +80,14 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    chronometer = null;
-
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_start);
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
+        if (chronometer!=null) {
+            chrono.stopChronometer(chronometer);
+        }
         findViews();
         implementEvents();
         Log.d(TAG, "onCreate: implemented events");
@@ -122,6 +122,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume: ");
+        chrono.running = false;
 
     }
 
@@ -129,7 +130,8 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart: ");
+        Log.d(TAG, "onStart: " + chrono.running);
+        chrono.running = false;
     }
 
 
@@ -137,7 +139,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop: is being called");
-
+        chrono.running = false;
 
     }
 
@@ -161,10 +163,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
 
-//
-//        if(running && starttimer!=0){
-//            chrono.startChronometer(chronometer);
-//        }
+
         switch (menuItem.getItemId()) {
 
             case R.id.play_action:
@@ -179,8 +178,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
                 return true;
 
             case R.id.stop_action:
-                chrono.showWarningMessage(chronometer);
-                    chrono.stopChronometer(chronometer);
+                Chrono.getInstance().showWarningMessage(chronometer);
                 Toast.makeText(this, "Elapsed time is " + (chrono.showElapsedTime(chronometer)) + " seconds", Toast.LENGTH_SHORT).show();
                 return true;
 

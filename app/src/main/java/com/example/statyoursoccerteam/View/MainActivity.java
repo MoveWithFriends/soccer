@@ -48,6 +48,7 @@ import static android.R.layout.simple_spinner_item;
 import static android.graphics.Bitmap.createBitmap;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
 
     public static final int NEW_CONTACT_ACTIVITY_REQUEST_CODE = 1;
 
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -114,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.d("strrrrr", ">>" + response);
+                        Log.d(TAG, ">>" + response);
 
                         try {
 
@@ -169,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.d("strrrrr", ">>" + response);
+                        Log.d(TAG, ">>" + response);
 
                         try {
 

@@ -52,12 +52,7 @@ public class Chrono {
         Log.d(TAG, "startChronometer: running ? " + running);
 
         if (!running) {
-//            Log.d(TAG, "startChronometer starttimer -: " + StartActivity.starttimer);
-            if (pauseOffset == 0) {
-                chronometer.setBase(SystemClock.elapsedRealtime() - (StartActivity.starttimer * 1000));
-            } else {
-                chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
-            }
+            chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             chronometer.start();
 
             running = true;
@@ -83,20 +78,17 @@ public class Chrono {
     }
 
     public void stopChronometer(final Chronometer chronometer) {
-        if (running) {
+
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             running = false;
-        } else {
-            pauseChronometer(chronometer);
-        }
+
 
     }
 
     public void showWarningMessage(Chronometer chronometer) {
-        Log.d(TAG, "showWarningMessage: " + running);
-        if (running) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(StartActivity.getInstance());
             builder.setTitle(R.string.app_name);
             builder.setMessage("Do you want to stop ?");
             builder.setIcon(R.drawable.ic_warning_black_24dp);
@@ -104,6 +96,7 @@ public class Chrono {
                 public void onClick(DialogInterface dialog, int id) {
                     dialog.dismiss();
                     Chrono.getInstance().stopChronometer(chronometer);
+//                    stopChronometer(chronometer);
                     StartActivity.getInstance().startSummaryActivity();
                 }
             });
@@ -115,7 +108,7 @@ public class Chrono {
             });
             AlertDialog alert = builder.create();
             alert.show();
-        }
+
 
     }
 
