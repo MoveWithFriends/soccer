@@ -11,7 +11,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.example.statyoursoccerteam.View.StartActivity;
 
 
-public class Chrono  {
+public class Chrono {
     private static final String TAG = "Chrono";
     private Context context;
     public boolean running = false;
@@ -27,14 +27,13 @@ public class Chrono  {
 //        super(context);
 //    }
 
-    private Chrono(Context context)  {
+    private Chrono(Context context) {
         this.context = context;
     }
 
     public static Chrono getInstance() {
         return instance;
     }
-
 
 
     /**
@@ -58,17 +57,17 @@ public class Chrono  {
 
         if (!running) {
 //            Log.d(TAG, "startChronometer starttimer -: " + StartActivity.starttimer);
-            if (pauseOffset==0){
-                chronometer.setBase(SystemClock.elapsedRealtime() - (StartActivity.starttimer*1000));
+            if (pauseOffset == 0) {
+                chronometer.setBase(SystemClock.elapsedRealtime() - (StartActivity.starttimer * 1000));
             } else {
                 chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
             }
-                chronometer.start();
+            chronometer.start();
 
             running = true;
 
         } else {
-            chronometer.setBase(SystemClock.elapsedRealtime() - (StartActivity.starttimer*1000));
+            chronometer.setBase(SystemClock.elapsedRealtime() - (StartActivity.starttimer * 1000));
             chronometer.start();
 //            running = false;
 
@@ -132,7 +131,7 @@ public class Chrono  {
 
     public long showElapsedTime(Chronometer chronometer) {
 //        Log.d(TAG, "showElapsedTime: " + chronometer);
-        if(chronometer!=null) {
+        if (chronometer != null) {
             if (running) {
                 elapsedSecs = (long) (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;
             } else {

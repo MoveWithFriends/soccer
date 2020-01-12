@@ -10,7 +10,7 @@
 
     >
 
-    <include layout="@layout/chrono" />
+
 
     <LinearLayout
         android:id="@+id/rowA_Layout"
@@ -567,7 +567,6 @@
             android:gravity="center"
             android:orientation="vertical"
             >
-
         </LinearLayout>
 
         <LinearLayout

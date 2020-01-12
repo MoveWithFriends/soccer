@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.statyoursoccerteam">
 
+    <!--Adding Camera, Write External Storage Permissions-->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -30,9 +34,9 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-<!--        <meta-data-->
-<!--            android:name="com.google.android.geo.API_KEY"-->
-<!--            android:value="@string/google_maps_key" />-->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
         <activity android:name=".View.MainActivity">
             <intent-filter>
@@ -47,6 +51,25 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".View.MainActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.START" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".View.AddPlayerActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".View.MainActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.START" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".View.SummaryActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".View.StartActivity" />
 
             <intent-filter>
                 <action android:name="android.intent.action.START" />

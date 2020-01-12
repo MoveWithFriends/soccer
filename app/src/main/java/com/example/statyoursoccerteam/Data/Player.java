@@ -1,5 +1,7 @@
 package com.example.statyoursoccerteam.Data;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -15,6 +17,18 @@ public class Player {
     @Expose
     private String shirtNumber;
 
+    @SerializedName("image")
+    @Expose
+    private Bitmap image;
+
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -39,4 +53,5 @@ public class Player {
     public void setShirtNumber(String shirtNumber) {
         this.shirtNumber = shirtNumber;
     }
+
 }

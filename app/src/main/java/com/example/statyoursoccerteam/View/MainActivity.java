@@ -3,17 +3,20 @@ package com.example.statyoursoccerteam.View;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,26 +26,32 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.statyoursoccerteam.Data.Player;
-import com.example.statyoursoccerteam.Data.SoccerStatsApi;
+import com.example.statyoursoccerteam.Data.ISoccerStatsApi;
 import com.example.statyoursoccerteam.Data.Teams;
 import com.example.statyoursoccerteam.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.R.layout.simple_spinner_item;
+import static android.graphics.Bitmap.createBitmap;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String URLstring = SoccerStatsApi.jsonUrl;
+    public static final int NEW_CONTACT_ACTIVITY_REQUEST_CODE = 1;
+
+    private String URLstring = ISoccerStatsApi.jsonUrl;
     private static ProgressDialog mProgressDialog;
     private ArrayList<Teams> teamArrayList;
     private ArrayList<Player> playerArrayList;
@@ -64,6 +73,15 @@ public class MainActivity extends AppCompatActivity {
 
         retrieveTeamJson("teams");
 
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddPlayerActivity.class);
+                startActivityForResult(intent, NEW_CONTACT_ACTIVITY_REQUEST_CODE);
+            }
+        });
+
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -78,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Log.d("Bitcoin", "Nothing selected!");
+                Log.d("Team", "Nothing selected!");
             }
         });
         linearLayoutManager = new LinearLayoutManager(this);
@@ -141,10 +159,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private void retrievePlayers(String url) {
 
         showSimpleProgressDialog(this, "Loading...", "Fetching Json", false);
-//
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLstring + url,
                 new Response.Listener<String>() {
                     @Override
@@ -167,6 +186,9 @@ public class MainActivity extends AppCompatActivity {
                                 playerModel.setFirstName(dataobj.getString("firstName"));
                                 playerModel.setLastName(dataobj.getString("lastName"));
                                 playerModel.setShirtNumber(dataobj.getString("backNumber"));
+                                if (dataobj.getString("image") != null) {
+                                    playerModel.setImage(BitMapToString(dataobj.getString("image")));
+                                }
 
                                 playerArrayList.add(playerModel);
 
@@ -197,6 +219,18 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
+    private Bitmap BitMapToString(String image) {
+        try {
+            byte[] encodeByte = Base64.decode(image, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
