@@ -2,17 +2,12 @@ package com.example.statyoursoccerteam.View;
 
 import android.Manifest;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -28,23 +23,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.statyoursoccerteam.Data.ISoccerStatsApi;
-import com.example.statyoursoccerteam.Data.Player;
 import com.example.statyoursoccerteam.Data.Teams;
 import com.example.statyoursoccerteam.R;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,7 +43,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Queue;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -64,8 +51,10 @@ import static com.example.statyoursoccerteam.View.MainActivity.showSimpleProgres
 
 public class AddPlayerActivity extends AppCompatActivity {
 
-    private static final int PERMISSION_CODE = 1000;
+    private static final int PERMISSION_CODE_CAMERA = 1000;
+    private static final int PERMISSION_CODE_GALLERY = 1002;
     private static final int IMAGE_CAPTURE_CODE = 1001;
+    private static final int GALLERY_CHOOSE_CODE = 1003;
     private Spinner titleSpinner;
     int teamId = 0;
     Bitmap bitmap;
@@ -135,7 +124,7 @@ public class AddPlayerActivity extends AppCompatActivity {
                         //permission not enabled, request it
                         String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
                         //shown popup to request permissions
-                        requestPermissions(permission, PERMISSION_CODE);
+                        requestPermissions(permission, PERMISSION_CODE_CAMERA);
                     }
                     else {
                         //permissions already granted
@@ -161,7 +150,7 @@ public class AddPlayerActivity extends AppCompatActivity {
                         //permission not enabled, request it
                         String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
                         //shown popup to request permissions
-                        requestPermissions(permission, PERMISSION_CODE);
+                        requestPermissions(permission, PERMISSION_CODE_GALLERY);
                     }
                     else {
                         //permissions already granted
@@ -278,22 +267,35 @@ public class AddPlayerActivity extends AppCompatActivity {
     }
 
     private void pickImageFromGallery(){
-        Intent intent = new Intent(Intent.ACTION_PICK);
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        // Sets the type as image/*. This ensures only components of type image are selected
         intent.setType("image/*");
-        startActivityForResult(intent, IMAGE_CAPTURE_CODE);
+        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+        // Launching the Intent
+        startActivityForResult(intent, GALLERY_CHOOSE_CODE);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         //this method is called, when user presses Allow or Deny from Permission Request Popup
         switch (requestCode) {
-            case PERMISSION_CODE: {
+            case PERMISSION_CODE_CAMERA: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //permission from popup was granted
                     openCamera();
                 }
                 else {
                     //permission from popup was denied
+                    Toast.makeText(this, "Permission denied...", Toast.LENGTH_SHORT).show();
+                }
+            }
+            case PERMISSION_CODE_GALLERY: {
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    pickImageFromGallery();
+                }
+                else{
                     Toast.makeText(this, "Permission denied...", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -305,7 +307,7 @@ public class AddPlayerActivity extends AppCompatActivity {
         //called when image was captured from camera
 
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK && requestCode == IMAGE_CAPTURE_CODE) {
             //set the image captured to our ImageView
             playerImage.setImageURI(image_uri);
             try {
@@ -314,7 +316,16 @@ public class AddPlayerActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        if(resultCode == RESULT_OK && requestCode == GALLERY_CHOOSE_CODE){
+            image_uri = data.getData();
+            playerImage.setImageURI(image_uri);
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), image_uri);
 
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
