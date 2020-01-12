@@ -7,11 +7,7 @@
         android:title=""
         app:actionLayout="@layout/chrono"
         app:showAsAction="always">
-        <Chronometer
-            android:id="@+id/chronometer_view2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp" />
+
     </item>
 
 

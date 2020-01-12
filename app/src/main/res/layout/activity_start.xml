@@ -10,7 +10,7 @@
 
     >
 
-    <include layout="@layout/chrono" />
+
 
     <LinearLayout
         android:id="@+id/rowA_Layout"
