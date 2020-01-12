@@ -188,26 +188,16 @@ public class AddPlayerActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
             }
         }
-        ) {
+        ){
             @Override
-<<<<<<< HEAD
             protected Map<String, String> getParams(){
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("firstName", editFirst.getText().toString());
-                    params.put("lastName", editLast.getText().toString());
-                    params.put("backNumber", editShirtNumber.getText().toString());
-                    params.put("teamId", String.valueOf(teamId));
-                    params.put("image", BitMapToString(bitmap));
-                    return params;
-=======
-            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("firstName", editFirst.getText().toString());
                 params.put("lastName", editLast.getText().toString());
                 params.put("backNumber", editShirtNumber.getText().toString());
                 params.put("teamId", String.valueOf(teamId));
+                params.put("image", BitMapToString(bitmap));
                 return params;
->>>>>>> 436e8e8e5d35bc6b570b6d99fbc730b30b5d28e7
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
