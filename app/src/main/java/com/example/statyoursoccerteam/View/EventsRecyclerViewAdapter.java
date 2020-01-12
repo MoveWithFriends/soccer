@@ -23,9 +23,6 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsRecycl
     private Context context;
     private List<Event> eventList = new ArrayList<>();
 
-
-
-
     public EventsRecyclerViewAdapter(ArrayList<Event> events) {
         Log.d(TAG, "EventsRecyclerViewAdapter: starts");
 
@@ -57,8 +54,6 @@ public class EventsRecyclerViewAdapter extends RecyclerView.Adapter<EventsRecycl
         holder.eventName.setText(eventName);
         holder.eventPlayer.setText(eventList.get(position).getPlayerName());
     }
-
-
 
     @Override
     public int getItemCount() {
