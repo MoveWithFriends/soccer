@@ -33,20 +33,32 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
-public class SummaryActivity extends AppCompatActivity {
+public class SummaryActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = "SummaryActivity";
     private boolean mTwoPane = false;
     int PERMISSION_ID = 44;
     FusedLocationProviderClient mFusedLocationClient;
     TextView latTextView, lonTextView;
-    public double currentLatitude;
-    public double currentLongitude;
+    private GoogleMap mMap;
+
+    private double currentLongitude;
+    private double currentLatitude;
+    private Marker marker;
+    private LatLng POS_LD;
 
 
     @Override
@@ -77,11 +89,16 @@ public class SummaryActivity extends AppCompatActivity {
             locationsFragment.setVisibility(View.GONE);
         }
 
-        latTextView = findViewById(R.id.latTextView);
-        lonTextView = findViewById(R.id.lonTextView);
+//        latTextView = findViewById(R.id.latTextView);
+//        lonTextView = findViewById(R.id.lonTextView);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         getLastLocation();
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map_fragment);
+        mapFragment.getMapAsync(this);
     }
 
 
@@ -97,8 +114,8 @@ public class SummaryActivity extends AppCompatActivity {
                                 if (location == null) {
                                     requestNewLocationData();
                                 } else {
-                                    latTextView.setText(location.getLatitude()+"");
-                                    lonTextView.setText(location.getLongitude()+"");
+//                                    latTextView.setText(location.getLatitude()+"");
+//                                    lonTextView.setText(location.getLongitude()+"");
                                     currentLatitude = location.getLatitude();
                                     currentLongitude = location.getLongitude();
                                 }
@@ -185,6 +202,42 @@ public class SummaryActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Log.d(TAG, "onMapReady: starts");
+        mMap = googleMap;
+        createMap();
+    }
+
+    private void createMap() {
+        Log.d(TAG, "createMap: starts");
+
+        LatLng POS_LD = new LatLng(currentLatitude, currentLongitude);
+        Log.d(TAG, "createMap: " + POS_LD);
+
+
+        marker = mMap.addMarker(new MarkerOptions()
+                .position(POS_LD)
+                .title("Your location")
+        );
+        marker.setTag(0);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(POS_LD, 16f));
+
+        mMap.setMinZoomPreference(10f);
+        mMap.setMaxZoomPreference(22f);
+
+        // Construct a CameraPosition focusing on LD and animate the camera to that position.
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(POS_LD)      // Sets the center of the map to LD
+                .zoom(16)            // Sets the zoom
+                .bearing(90)         // Sets the orientation of the camera to east
+                .tilt(45)            // Sets the tilt of the camera to 45 degrees
+                .build();            // Creates a CameraPosition from the builder
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+    }
 }
 
 
