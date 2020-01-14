@@ -14,16 +14,16 @@ import com.example.statyoursoccerteam.View.StartActivity;
 
 public class Chrono {
     private static final String TAG = "Chrono";
-    private Context context;
+    public Context context;
     public boolean running = false;
     public long pauseOffset = 0;
-    private long elapsedSecs;
+    private long elapsedMin;
 
     //Implement Chrono as a Singleton
     public static Chrono instance = null;
 
 
-    private Chrono(Context context) {
+    Chrono(Context context) {
         this.context = context;
     }
 
@@ -49,7 +49,7 @@ public class Chrono {
 
 
     public void startChronometer(Chronometer chronometer) {
-        Log.d(TAG, "startChronometer: running ? " + running);
+//        Log.d(TAG, "startChronometer: running ? " + running);
 
         if (!running) {
             chronometer.setBase(SystemClock.elapsedRealtime() - pauseOffset);
@@ -77,13 +77,14 @@ public class Chrono {
         }
     }
 
+    /**
+     *
+     * @param chronometer
+     */
     public void stopChronometer(final Chronometer chronometer) {
-
             chronometer.stop();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             running = false;
-
-
     }
 
     public void showWarningMessage(Chronometer chronometer) {
@@ -109,22 +110,27 @@ public class Chrono {
             AlertDialog alert = builder.create();
             alert.show();
 
-
     }
 
-
+    /**
+     * Give back the elapsed time in game minute
+     * @param chronometer
+     * @return elapsedMin
+     */
     public long showElapsedTime(Chronometer chronometer) {
         if (chronometer != null) {
             if (running) {
-                elapsedSecs = (long) (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;
+                elapsedMin = (long) Math.ceil((double) (SystemClock.elapsedRealtime() - chronometer.getBase()) / 60000);
             } else {
-                elapsedSecs = (SystemClock.elapsedRealtime() - chronometer.getBase()) / 1000;
+                elapsedMin = (long) Math.ceil((double) (SystemClock.elapsedRealtime() - chronometer.getBase()) / 60000);
             }
 
         } else {
-            elapsedSecs = 0;
+            elapsedMin = 0;
         }
-        return elapsedSecs;
+        return elapsedMin;
     }
+
+
 
 }

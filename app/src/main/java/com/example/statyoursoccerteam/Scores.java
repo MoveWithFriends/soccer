@@ -8,8 +8,9 @@ public class Scores {
     private int scorePro = 0;
 
     /**
-     * scores of
-     * @return
+     * Scores of opponent
+     * @return goals
+     * against
      */
 
     public String scoreAgainst() {
@@ -18,6 +19,11 @@ public class Scores {
         return goals;
     }
 
+    /**
+     * Scores of own team
+     * @return goal
+     * in our favor
+     */
     public String scorePro() {
         scorePro++;
         String goal = String.valueOf(scorePro);

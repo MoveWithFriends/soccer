@@ -13,6 +13,7 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class SummaryActivity extends AppCompatActivity {
     int PERMISSION_ID = 44;
     FusedLocationProviderClient mFusedLocationClient;
     TextView latTextView, lonTextView;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

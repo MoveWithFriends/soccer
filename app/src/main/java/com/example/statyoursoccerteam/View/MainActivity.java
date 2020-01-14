@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
                 GetJson.retrievePlayers(URLstring,"players" + "/" + (selectedTeam + 1) ,MainActivity.this, pList, linearLayoutManager, dividerItemDecoration);
 
+                retrievePlayers("players" + "/" + (selectedTeam + 1));
             }
 
             @Override
