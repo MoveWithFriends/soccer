@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ClipData;
 import android.content.ClipDescription;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -50,6 +52,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     private ImageView nick;
     private ImageView joost;
     private ImageView stijn;
+    private ImageView frans;
     private LinearLayout goals;
     private LinearLayout assists;
     private LinearLayout substitute1;
@@ -60,6 +63,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
     private LinearLayout goals_against;
     private LinearLayout yellowcard;
     private LinearLayout redcard;
+    private static final String FRANS_VIEW_TAG = "Frans";
     private static final String JOOST_VIEW_TAG = "Joost";
     private static final String NICK_VIEW_TAG = "Nick";
     private static final String STIJN_VIEW_TAG = "Stijn";
@@ -174,12 +178,12 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
 
             case R.id.pause_action:
                 chrono.pauseChronometer(chronometer);
-                Toast.makeText(this, "Elapsed time is " + (chrono.showElapsedTime(chronometer)) + " seconds", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "This event took place in minute " + (chrono.showElapsedTime(chronometer)), Toast.LENGTH_SHORT).show();
                 return true;
 
             case R.id.stop_action:
                 Chrono.getInstance().showWarningMessage(chronometer);
-                Toast.makeText(this, "Elapsed time is " + (chrono.showElapsedTime(chronometer)) + " seconds", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "This event took place in minute " + (chrono.showElapsedTime(chronometer)), Toast.LENGTH_SHORT).show();
                 return true;
 
             default:
@@ -307,6 +311,12 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         int action = event.getAction();
         TextView score = (TextView) findViewById(R.id.score_in_advance);
         View dragged = (View) event.getLocalState();
+        Log.d(TAG, "onDrag: action is " + event.getResult());
+        boolean remove = false;
+
+        // Gets a handle to the Clipboard Manager
+        ClipboardManager clipboard = (ClipboardManager)
+                getSystemService(Context.CLIPBOARD_SERVICE);
 
         // Handles each of the expected events
         switch (action) {
@@ -335,6 +345,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
                 return true;
             case DragEvent.ACTION_DROP:
 
+
                 // Gets the item containing the dragged data
                 ClipData.Item item = event.getClipData().getItemAt(0);
 
@@ -350,21 +361,23 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
                 if (container.getTag() != null) {
                     switch (container.getTag().toString()) {
                         case RED_CARD_LAYOUT_TAG:
-                            Toast.makeText(this, "" + dragData + " heeft rode kaart gekregen", Toast.LENGTH_SHORT).show();
+                            remove = true;
+                            Log.d(TAG, "onDrag: red card remove " + remove);
+                            Toast.makeText(this, "" + dragData + " received a red card in minute "+ chrono.showElapsedTime(chronometer), Toast.LENGTH_SHORT).show();
                             break;
                         case YELLOW_CARD_LAYOUT_TAG:
-                            Toast.makeText(this, "" + dragData + " heeft gele kaart gekregen", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "" + dragData + " received a yellow card in minute "+ chrono.showElapsedTime(chronometer), Toast.LENGTH_SHORT).show();
                             break;
                         case GOALS_LAYOUT_TAG:
-                            Toast.makeText(this, "" + dragData + " made a goal", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "" + dragData + " made a goal in minute " + chrono.showElapsedTime(chronometer), Toast.LENGTH_SHORT).show();
                             score.setText(scores_pro.scorePro());
                             break;
                         case ASSISTS_LAYOUT_TAG:
-                            Toast.makeText(this, "" + dragData + " made an assist", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "" + dragData + " made an assist ", Toast.LENGTH_SHORT).show();
                             break;
                         case SUBSTITUTE_LAYOUT_TAG:
                             swapPlayers(dragged, vr, container);
-                            Toast.makeText(this, "" + dragData + " wordt gewisseld", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "" + dragData + " got substituted ", Toast.LENGTH_SHORT).show();
                             break;
                         default:
                             Toast.makeText(this, "Nothing to show", Toast.LENGTH_SHORT).show();
@@ -380,6 +393,10 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
                 // Invalidate the view to force a redraw in the new tint
                 view.invalidate();
 
+                if(remove){
+                    Log.d(TAG, "onDrag: remove? " + remove);
+                    dragged.setVisibility(INVISIBLE);
+                }
                 // Returns true. DragEvent.getResult() will return true.
                 return true;
 
@@ -396,6 +413,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         }
         return false;
     }
+
 
     private void swapPlayers(View dragged, View vr, LinearLayout container) {
         if (container.getChildAt(0) != null) {

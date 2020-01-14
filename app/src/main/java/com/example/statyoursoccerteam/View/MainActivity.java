@@ -91,9 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 int selectedTeam = parent.getSelectedItemPosition();
                 Log.d("Team", "Selected: " + selectedTeam);
                 Log.d("Team", "URL: " + +selectedTeam);
-
                 retrievePlayers("players" + "/" + (selectedTeam + 1));
-
             }
 
             @Override

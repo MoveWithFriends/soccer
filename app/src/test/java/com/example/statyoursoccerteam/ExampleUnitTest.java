@@ -34,6 +34,8 @@ public class ExampleUnitTest {
 
     @Test
     public void startChrono() {
+        //Arrange
+        chrono.startChronometer(mockChronometer);
 
 
 
@@ -41,21 +43,21 @@ public class ExampleUnitTest {
 
     @Test
     public void timeDifferenceToCheckCalculation() {
-//        //Arrange
-//        chrono.startChronometer(mockChronometer);
-//
-//        try {
-//            Thread.sleep(3000);
-//        } catch (InterruptedException e1) {
-//            e1.printStackTrace();
-//        }
-//        chrono.stopChronometer(mockChronometer);
-//        //Act
-//        long diff = chrono.showElapsedTime(mockChronometer);
-//
-//
-//        //Assert
-//        assertEquals(diff, 3);
+        //Arrange
+        chrono.startChronometer(mockChronometer);
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+        }
+        chrono.stopChronometer(mockChronometer);
+        //Act
+        long diff = chrono.showElapsedTime(mockChronometer);
+
+
+        //Assert
+        assertEquals(diff, 3);
 
     }
 }
