@@ -13,7 +13,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -30,13 +29,10 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.statyoursoccerteam.Controller.GetJson;
 import com.example.statyoursoccerteam.Data.ISoccerStatsApi;
 import com.example.statyoursoccerteam.Data.Teams;
 import com.example.statyoursoccerteam.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -45,9 +41,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.R.layout.simple_spinner_item;
-import static com.example.statyoursoccerteam.View.MainActivity.showSimpleProgressDialog;
 
 public class AddPlayerActivity extends AppCompatActivity {
 
@@ -86,7 +79,7 @@ public class AddPlayerActivity extends AppCompatActivity {
         imageBtn = findViewById(R.id.image_button);
         playerImage = findViewById(R.id.player_image);
 
-        retrieveTeamJson("teams");
+        GetJson.retrieveTeams(AddPlayerActivity.this, spinner);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,59 +195,6 @@ public class AddPlayerActivity extends AppCompatActivity {
         return temp;
     }
 
-    private void retrieveTeamJson(String url) {
-
-        showSimpleProgressDialog(this, "Loading...", "Fetching Json", false);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLstring + url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        Log.d("strrrrr", ">>" + response);
-
-                        try {
-
-                            JSONArray js = new JSONArray(response);
-
-                            teamArrayList = new ArrayList<>();
-
-                            for (int i = 0; i < js.length(); i++) {
-
-                                Teams teamModel = new Teams();
-                                JSONObject dataobj = js.getJSONObject(i);
-
-                                teamModel.setTeamName(dataobj.getString("teamName"));
-
-                                teamArrayList.add(teamModel);
-                            }
-                            for (int i = 0; i < teamArrayList.size(); i++) {
-                                teams.add(teamArrayList.get(i).getTeamName());
-                            }
-
-                            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(AddPlayerActivity.this, simple_spinner_item, teams);
-                            spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-                            spinner.setAdapter(spinnerArrayAdapter);
-                            MainActivity.removeSimpleProgressDialog();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                error -> {
-                    //displaying the error in toast if occurrs
-                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-
-        // request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        requestQueue.add(stringRequest);
-        MainActivity.removeSimpleProgressDialog();
-
-
-    }
     private void openCamera() {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "New Picture");

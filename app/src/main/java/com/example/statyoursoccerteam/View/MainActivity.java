@@ -1,15 +1,11 @@
 package com.example.statyoursoccerteam.View;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -18,11 +14,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.statyoursoccerteam.Controller.GetJson;
 import com.example.statyoursoccerteam.Data.ISoccerStatsApi;
 import com.example.statyoursoccerteam.Data.Player;
@@ -30,14 +21,8 @@ import com.example.statyoursoccerteam.Data.Teams;
 import com.example.statyoursoccerteam.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.layout.simple_spinner_item;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -45,16 +30,16 @@ public class MainActivity extends AppCompatActivity {
     public static final int NEW_CONTACT_ACTIVITY_REQUEST_CODE = 1;
 
     private String URLstring = ISoccerStatsApi.jsonUrl;
-    private static ProgressDialog mProgressDialog;
     private ArrayList<Teams> teamArrayList;
     private ArrayList<Player> playerArrayList;
-    private ArrayList<String> teams = new ArrayList<String>();
+    private ArrayList<String> teams = new ArrayList<>();
     private List<Player> players;
     private LinearLayoutManager linearLayoutManager;
     private Spinner spinner;
     private RecyclerView pList;
     private DividerItemDecoration dividerItemDecoration;
     private RecyclerView.Adapter adapter;
+    private Teams teamModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         spinner = findViewById(R.id.spTeams);
         pList = findViewById(R.id.rv);
 
-        retrieveTeamJson("teams");
+        GetJson.retrieveTeams(MainActivity.this , spinner);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Team", "URL: " + +selectedTeam);
 
                 GetJson.retrievePlayers(URLstring,"players" + "/" + (selectedTeam + 1) ,MainActivity.this, pList, linearLayoutManager, dividerItemDecoration);
-
             }
 
             @Override
@@ -97,64 +81,6 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         dividerItemDecoration = new DividerItemDecoration(pList.getContext(), linearLayoutManager.getOrientation());
     }
-
-    private void retrieveTeamJson(String url) {
-
-        showSimpleProgressDialog(this, "Loading...", "Fetching Json", false);
-//
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLstring + url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d(TAG, ">>" + response);
-                        try {
-                            JSONArray js = new JSONArray(response);
-                            teamArrayList = new ArrayList<>();
-
-                            for (int i = 0; i < js.length(); i++) {
-
-                                Teams teamModel = new Teams();
-                                JSONObject dataobj = js.getJSONObject(i);
-
-                                teamModel.setTeamName(dataobj.getString("teamName"));
-
-                                teamArrayList.add(teamModel);
-                            }
-                            for (int i = 0; i < teamArrayList.size(); i++) {
-                                teams.add(teamArrayList.get(i).getTeamName());
-                            }
-
-                            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(MainActivity.this, simple_spinner_item, teams);
-                            spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-                            spinner.setAdapter(spinnerArrayAdapter);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                error -> {
-                    //displaying the error in toast if occurrs
-                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                });
-
-        // request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        requestQueue.add(stringRequest);
-        removeSimpleProgressDialog();
-
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -173,35 +99,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static void removeSimpleProgressDialog() {
-        try {
-            if (mProgressDialog != null) {
-                if (mProgressDialog.isShowing()) {
-                    mProgressDialog.dismiss();
-                    mProgressDialog = null;
-                }
-            }
-        } catch (Exception ie) {
-            ie.printStackTrace();
-        }
-    }
 
-    public static void showSimpleProgressDialog(Context context, String title,
-                                                String msg, boolean isCancelable) {
-        try {
-            if (mProgressDialog == null) {
-                mProgressDialog = ProgressDialog.show(context, title, msg);
-                mProgressDialog.setCancelable(isCancelable);
-            }
-
-            if (!mProgressDialog.isShowing()) {
-                mProgressDialog.show();
-            }
-
-        } catch (IllegalArgumentException ie) {
-            ie.printStackTrace();
-        }
-
-
-    }
 }
