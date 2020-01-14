@@ -33,6 +33,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -44,6 +45,8 @@ public class SummaryActivity extends AppCompatActivity {
     int PERMISSION_ID = 44;
     FusedLocationProviderClient mFusedLocationClient;
     TextView latTextView, lonTextView;
+    public double currentLatitude;
+    public double currentLongitude;
 
 
     @Override
@@ -55,7 +58,7 @@ public class SummaryActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         mTwoPane = (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) ||
-                (getResources().getDisplayMetrics().widthPixels > 1200);
+                (getResources().getDisplayMetrics().widthPixels > 600);
 
         Log.d(TAG, "onCreate: twoPane is " + mTwoPane);
 
@@ -96,6 +99,8 @@ public class SummaryActivity extends AppCompatActivity {
                                 } else {
                                     latTextView.setText(location.getLatitude()+"");
                                     lonTextView.setText(location.getLongitude()+"");
+                                    currentLatitude = location.getLatitude();
+                                    currentLongitude = location.getLongitude();
                                 }
                             }
                         }
@@ -178,6 +183,8 @@ public class SummaryActivity extends AppCompatActivity {
         }
 
     }
+
+
 }
 
 
