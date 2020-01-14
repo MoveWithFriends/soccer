@@ -3,10 +3,7 @@ package com.example.statyoursoccerteam.View;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,13 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.statyoursoccerteam.Data.Player;
+import com.example.statyoursoccerteam.Controller.GetJson;
 import com.example.statyoursoccerteam.Data.ISoccerStatsApi;
+import com.example.statyoursoccerteam.Data.Player;
 import com.example.statyoursoccerteam.Data.Teams;
 import com.example.statyoursoccerteam.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -40,12 +34,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.R.layout.simple_spinner_item;
-import static android.graphics.Bitmap.createBitmap;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -92,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Team", "Selected: " + selectedTeam);
                 Log.d("Team", "URL: " + +selectedTeam);
 
-                retrievePlayers("players" + "/" + (selectedTeam + 1));
+                GetJson.retrievePlayers(URLstring,"players" + "/" + (selectedTeam + 1) ,MainActivity.this, pList, linearLayoutManager, dividerItemDecoration);
 
             }
 
@@ -106,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         dividerItemDecoration = new DividerItemDecoration(pList.getContext(), linearLayoutManager.getOrientation());
     }
 
-
     private void retrieveTeamJson(String url) {
 
         showSimpleProgressDialog(this, "Loading...", "Fetching Json", false);
@@ -115,13 +106,9 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         Log.d(TAG, ">>" + response);
-
                         try {
-
                             JSONArray js = new JSONArray(response);
-
                             teamArrayList = new ArrayList<>();
 
                             for (int i = 0; i < js.length(); i++) {
@@ -140,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
                             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(MainActivity.this, simple_spinner_item, teams);
                             spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
                             spinner.setAdapter(spinnerArrayAdapter);
-                            removeSimpleProgressDialog();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -160,79 +146,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
-    private void retrievePlayers(String url) {
-
-        showSimpleProgressDialog(this, "Loading...", "Fetching Json", false);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLstring + url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                        Log.d(TAG, ">>" + response);
-
-                        try {
-
-                            JSONObject obj = new JSONObject(response);
-
-                            playerArrayList = new ArrayList<>();
-                            JSONArray dataArray = obj.getJSONArray("players");
-
-                            for (int i = 0; i < dataArray.length(); i++) {
-
-                                Player playerModel = new Player();
-                                JSONObject dataobj = dataArray.getJSONObject(i);
-
-                                playerModel.setFirstName(dataobj.getString("firstName"));
-                                playerModel.setLastName(dataobj.getString("lastName"));
-                                playerModel.setShirtNumber(dataobj.getString("backNumber"));
-                                if (dataobj.getString("image") != null) {
-                                    playerModel.setImage(BitMapToString(dataobj.getString("image")));
-                                }
-
-                                playerArrayList.add(playerModel);
-
-                            }
-                            adapter = new MyViewAdapter(getApplicationContext(), playerArrayList);
-
-
-                            pList.setHasFixedSize(true);
-                            pList.setLayoutManager(linearLayoutManager);
-                            pList.addItemDecoration(dividerItemDecoration);
-                            pList.setAdapter(adapter);
-                            removeSimpleProgressDialog();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //displaying the error in toast if occurrs
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        // request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
-
-    private Bitmap BitMapToString(String image) {
-        try {
-            byte[] encodeByte = Base64.decode(image, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch (Exception e) {
-            e.getMessage();
-            return null;
-        }
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

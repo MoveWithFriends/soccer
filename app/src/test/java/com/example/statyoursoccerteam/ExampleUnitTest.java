@@ -26,7 +26,6 @@ public class ExampleUnitTest {
 
     Chronometer mockChronometer;
     Context mockContext;
-    Chrono chrono = new Chrono(mockContext);
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
