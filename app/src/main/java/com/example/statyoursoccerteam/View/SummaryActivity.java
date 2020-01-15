@@ -53,14 +53,16 @@ public class SummaryActivity extends AppCompatActivity implements OnMapReadyCall
     int PERMISSION_ID = 44;
     FusedLocationProviderClient mFusedLocationClient;
     TextView latTextView, lonTextView;
-    double lastLatitude;
-    double lastLongitude;
+    public double lastLatitude;
+    public double lastLongitude;
     private GoogleMap mMap;
     Marker marker;
+    public LatLng lastLocation;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: starts");
         setContentView(R.layout.activity_summary);
@@ -94,23 +96,33 @@ public class SummaryActivity extends AppCompatActivity implements OnMapReadyCall
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         getLastLocation();
+
+
     }
 
 
     @SuppressLint("MissingPermission")
     public void getLastLocation(){
+        Log.d(TAG, "getLastLocation: ");
         if (checkPermissions()) {
+            Log.d(TAG, "getLastLocation: check permission = " + checkPermissions());
             if (isLocationEnabled()) {
+                Log.d(TAG, "getLastLocation: check location enabled = " + isLocationEnabled());
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(
                         new OnCompleteListener<Location>() {
                             @Override
                             public void onComplete(@NonNull Task<Location> task) {
+                                Log.d(TAG, "onComplete: taskResult " + task.getResult());
                                 Location location = task.getResult();
                                 if (location == null) {
+                                    Log.d(TAG, "onComplete: location = null");
                                     requestNewLocationData();
                                 } else {
+                                    Log.d(TAG, "onComplete: permission gives LatLng");
                                     lastLatitude = location.getLatitude();
                                     lastLongitude = location.getLongitude();
+                                    Log.d(TAG, "onComplete: lat " + lastLatitude + " long " + lastLongitude);
+                                    createMap();
                                 }
                             }
                         }
@@ -128,6 +140,7 @@ public class SummaryActivity extends AppCompatActivity implements OnMapReadyCall
 
     @SuppressLint("MissingPermission")
     private void requestNewLocationData(){
+        Log.d(TAG, "requestNewLocationData: called");
 
         LocationRequest mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -136,23 +149,28 @@ public class SummaryActivity extends AppCompatActivity implements OnMapReadyCall
         mLocationRequest.setNumUpdates(1);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        Log.d(TAG, "requestNewLocationData: " + mFusedLocationClient);
         mFusedLocationClient.requestLocationUpdates(
                 mLocationRequest, mLocationCallback,
                 Looper.myLooper()
         );
-
+        Log.d(TAG, "request latituded: " + lastLatitude);
     }
 
     private LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
+            Log.d(TAG, "onLocationResult: LocationCallBack called");
             Location mLastLocation = locationResult.getLastLocation();
             lastLatitude = mLastLocation.getLatitude();
             lastLongitude = mLastLocation.getLongitude();
+//            onMapReady(mMap);
+
         }
     };
 
     private boolean checkPermissions() {
+        Log.d(TAG, "checkPermissions: ");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             return true;
@@ -161,6 +179,7 @@ public class SummaryActivity extends AppCompatActivity implements OnMapReadyCall
     }
 
     private void requestPermissions() {
+        Log.d(TAG, "requestPermissions: ");
         ActivityCompat.requestPermissions(
                 this,
                 new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
@@ -169,6 +188,7 @@ public class SummaryActivity extends AppCompatActivity implements OnMapReadyCall
     }
 
     private boolean isLocationEnabled() {
+        Log.d(TAG, "isLocationEnabled: ");
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
                 LocationManager.NETWORK_PROVIDER
@@ -177,6 +197,7 @@ public class SummaryActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        Log.d(TAG, "onRequestPermissionsResult: ");
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_ID) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -187,6 +208,7 @@ public class SummaryActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public void onResume(){
+        Log.d(TAG, "onResume: ");
         super.onResume();
         if (checkPermissions()) {
             getLastLocation();
@@ -198,13 +220,14 @@ public class SummaryActivity extends AppCompatActivity implements OnMapReadyCall
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMapReady: starts");
         mMap = googleMap;
+
         createMap();
     }
 
     private void createMap() {
         Log.d(TAG, "createMap: starts");
 
-        LatLng lastLocation = new LatLng(51.584624, 4.906740);
+        lastLocation = new LatLng(lastLatitude, lastLongitude);
         Log.d(TAG, "createMap: " + lastLocation);
         // Add a marker in Sydney and move the camera
         UiSettings settings = mMap.getUiSettings();
