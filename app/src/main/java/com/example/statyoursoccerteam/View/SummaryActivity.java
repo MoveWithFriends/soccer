@@ -33,17 +33,30 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 
-public class SummaryActivity extends AppCompatActivity {
+public class SummaryActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = "SummaryActivity";
     private boolean mTwoPane = false;
     int PERMISSION_ID = 44;
     FusedLocationProviderClient mFusedLocationClient;
     TextView latTextView, lonTextView;
+    double lastLatitude;
+    double lastLongitude;
+    private GoogleMap mMap;
+    Marker marker;
 
 
     @Override
@@ -53,6 +66,10 @@ public class SummaryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_summary);
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map_fragment);
+        mapFragment.getMapAsync(this);
 
         mTwoPane = (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) ||
                 (getResources().getDisplayMetrics().widthPixels > 1200);
@@ -74,8 +91,6 @@ public class SummaryActivity extends AppCompatActivity {
             locationsFragment.setVisibility(View.GONE);
         }
 
-        latTextView = findViewById(R.id.latTextView);
-        lonTextView = findViewById(R.id.lonTextView);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         getLastLocation();
@@ -94,8 +109,8 @@ public class SummaryActivity extends AppCompatActivity {
                                 if (location == null) {
                                     requestNewLocationData();
                                 } else {
-                                    latTextView.setText(location.getLatitude()+"");
-                                    lonTextView.setText(location.getLongitude()+"");
+                                    lastLatitude = location.getLatitude();
+                                    lastLongitude = location.getLongitude();
                                 }
                             }
                         }
@@ -132,8 +147,8 @@ public class SummaryActivity extends AppCompatActivity {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-            latTextView.setText(mLastLocation.getLatitude()+"");
-            lonTextView.setText(mLastLocation.getLongitude()+"");
+            lastLatitude = mLastLocation.getLatitude();
+            lastLongitude = mLastLocation.getLongitude();
         }
     };
 
@@ -176,6 +191,47 @@ public class SummaryActivity extends AppCompatActivity {
         if (checkPermissions()) {
             getLastLocation();
         }
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Log.d(TAG, "onMapReady: starts");
+        mMap = googleMap;
+        createMap();
+    }
+
+    private void createMap() {
+        Log.d(TAG, "createMap: starts");
+
+        LatLng lastLocation = new LatLng(51.584624, 4.906740);
+        Log.d(TAG, "createMap: " + lastLocation);
+        // Add a marker in Sydney and move the camera
+        UiSettings settings = mMap.getUiSettings();
+        settings.setZoomControlsEnabled(true);
+        settings.setTiltGesturesEnabled(true);
+        settings.setMyLocationButtonEnabled(true);
+
+        marker = mMap.addMarker(new MarkerOptions()
+                .position(lastLocation)
+                .title("Your location")
+        );
+        marker.setTag(0);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lastLocation, 16f));
+
+        mMap.setMinZoomPreference(10f);
+        mMap.setMaxZoomPreference(22f);
+
+        // Construct a CameraPosition focusing on LD and animate the camera to that position.
+        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(lastLocation)      // Sets the center of the map to LD
+                .zoom(16)            // Sets the zoom
+                .bearing(90)         // Sets the orientation of the camera to east
+                .tilt(45)            // Sets the tilt of the camera to 45 degrees
+                .build();            // Creates a CameraPosition from the builder
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
     }
 }
