@@ -2,17 +2,41 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/location_fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<!--    tools:context=".View.SummaryActivity"-->
-<!--    tools:actionBarNavMode="standard"-->
+    android:layout_height="match_parent"
+    >
+    <!--    tools:context=".View.SummaryActivity"-->
+    <!--    tools:actionBarNavMode="standard"-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/latTextView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:text="Latitude: "-->
+    <!--        map:layout_constraintStart_toStartOf="parent"-->
+    <!--        map:layout_constraintTop_toTopOf="parent"-->
+    <!--        />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/lonTextView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginTop="14dp"-->
+    <!--        android:text="Longitude: "-->
+    <!--        map:layout_constraintStart_toStartOf="parent"-->
+    <!--        map:layout_constraintTop_toBottomOf="@+id/latTextView"-->
+    <!--        />-->
+
     <TextView
         android:id="@+id/latTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Latitude: "
+        android:text="Latitude!"
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toTopOf="parent"
         />
@@ -21,11 +45,21 @@
         android:id="@+id/lonTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="14dp"
-        android:text="Longitude: "
-        map:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
+        android:text="Longitude"
+        map:layout_constraintStart_toStartOf="@+id/latTextView"
         map:layout_constraintTop_toBottomOf="@+id/latTextView"
+        />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        map:layout_constraintBottom_toBottomOf="parent"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintStart_toStartOf="parent"
+        map:layout_constraintTop_toBottomOf="@+id/lonTextView"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
