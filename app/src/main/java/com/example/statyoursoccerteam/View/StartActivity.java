@@ -1,10 +1,5 @@
 package com.example.statyoursoccerteam.View;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.ClipboardManager;
@@ -13,7 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
@@ -27,21 +21,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.statyoursoccerteam.Chrono;
 import com.example.statyoursoccerteam.R;
 import com.example.statyoursoccerteam.Scores;
 
-
-import static androidx.recyclerview.widget.RecyclerView.*;
-import static com.example.statyoursoccerteam.R.id.action_context_bar;
-import static com.example.statyoursoccerteam.R.id.action_menu_presenter;
-import static com.example.statyoursoccerteam.R.id.expanded_menu;
-import static com.example.statyoursoccerteam.R.id.parent;
-import static com.example.statyoursoccerteam.R.id.pause_action;
-import static com.example.statyoursoccerteam.R.id.play_action;
-import static com.example.statyoursoccerteam.R.id.start;
-import static com.example.statyoursoccerteam.R.layout.activity_main;
-import static com.example.statyoursoccerteam.R.layout.chrono;
+import static androidx.recyclerview.widget.RecyclerView.INVISIBLE;
+import static androidx.recyclerview.widget.RecyclerView.OnLongClickListener;
 
 
 public class StartActivity extends AppCompatActivity implements View.OnLongClickListener, View.OnDragListener {
@@ -92,6 +81,10 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
         if (chronometer!=null) {
             chrono.stopChronometer(chronometer);
         }
+
+
+
+
         findViews();
         implementEvents();
         Log.d(TAG, "onCreate: implemented events");
@@ -108,6 +101,7 @@ public class StartActivity extends AppCompatActivity implements View.OnLongClick
             }
         });
         instanceStartActivity = this;
+
     }
 
     public static StartActivity getInstance(){
